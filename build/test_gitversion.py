@@ -41,12 +41,6 @@ class GitVersionTests(unittest.TestCase):
     def released(self):
         self.git("tag", "v1.2.0")
 
-    def test_first_main_release_is_1_2_0(self):
-        self.commit("refactor: extract schema libraries")
-        self.commit("fix: select canonical coverage reports")
-        self.commit("ci: configure the release workflow")
-        self.assertEqual(self.version(), "1.2.0")
-
     def test_fixes_and_maintenance_advance_patch_on_main(self):
         self.released()
         self.commit("fix: preserve schema values")

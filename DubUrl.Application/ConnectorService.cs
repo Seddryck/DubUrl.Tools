@@ -69,7 +69,8 @@ public sealed class ConnectorService(
                 false,
                 entry.Aliases ?? [],
                 entry.Schemes ?? [],
-                []) { CatalogProvenance = entry.CatalogProvenance });
+                [])
+            { CatalogProvenance = entry.CatalogProvenance });
         return installed.Concat(available)
             .OrderBy(connector => connector.Id, StringComparer.OrdinalIgnoreCase)
             .ThenBy(connector => connector.Source, StringComparer.Ordinal)
@@ -99,13 +100,22 @@ public sealed class ConnectorService(
         if (entry is null)
             throw new InvalidOperationException("The connector catalog returned an empty entry.");
 
+        return await InstallEntryAsync(entry, archivePath, cancellationToken).ConfigureAwait(false);
+    }
+
+    private Task<Stream> OpenArchiveAsync(ConnectorDefinition entry, string? archivePath, CancellationToken cancellationToken)
+    {
+        if (archivePath is not null) return Task.FromResult<Stream>(File.OpenRead(archivePath));
+        var uri = entry.DownloadUri
+            ?? throw new ConnectorOperationException("download-missing", $"Connector '{entry.Provider}' has no download URL.");
+        return httpClient.GetStreamAsync(uri, cancellationToken);
+    }
+
+    private async Task<ConnectorInfo> InstallEntryAsync(ConnectorDefinition entry, string? archivePath, CancellationToken cancellationToken)
+    {
         try
         {
-            await using var archive = archivePath is not null
-                ? File.OpenRead(archivePath)
-                : await httpClient.GetStreamAsync(entry.DownloadUri
-                    ?? throw new ConnectorOperationException("download-missing", $"Connector '{entry.Provider}' has no download URL."),
-                    cancellationToken).ConfigureAwait(false);
+            await using var archive = await OpenArchiveAsync(entry, archivePath, cancellationToken).ConfigureAwait(false);
             var installed = await store.InstallAsync(entry, archive, cancellationToken).ConfigureAwait(false);
             return ToConnectorInfo(installed, entry);
         }
@@ -190,7 +200,8 @@ public sealed class ConnectorService(
             unhealthy,
             catalogEntry?.Aliases ?? [],
             pack.Manifest.Schemes,
-            pack.Diagnostics) { CatalogProvenance = pack.Manifest.CatalogProvenance };
+            pack.Diagnostics)
+        { CatalogProvenance = pack.Manifest.CatalogProvenance };
     }
 
     private static string GetState(bool active, bool unhealthy)

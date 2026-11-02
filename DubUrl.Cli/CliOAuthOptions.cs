@@ -52,15 +52,12 @@ internal sealed class CliOAuthOptions
         var registry = services.GetRequiredService<DubUrl.Mapping.ISchemeRegistry>();
         var provider = registry.GetMapper(uri.Scheme).GetProviderName();
         var selectedFlow = parsed.GetValue(flow);
-        if (selectedFlow is not ("browser" or "device-code") || provider is not ("Microsoft.Data.SqlClient" or "Snowflake.Data"))
-            throw new ConnectionAuthenticationException(AuthenticationDiagnosticCodes.UnsupportedAuthentication);
-        if (provider == "Snowflake.Data" && selectedFlow != "browser")
-            throw new ConnectionAuthenticationException(AuthenticationDiagnosticCodes.UnsupportedAuthentication);
+        ValidateProviderFlow(provider, selectedFlow);
         var settings = services.GetRequiredService<IConfiguration>().GetSection("Authentication:OAuth");
         string? Value(Option<string?> option, string key) => parsed.GetValue(option) ?? settings[key];
         var budget = parsed.GetValue(timeout) ?? ReadTimeout(settings["TimeoutSeconds"]);
         if (budget is < 1 or > 3600) throw new CliOAuthInputException("--oauth-timeout must be between 1 and 3600 seconds.");
-        var request = CreateRequest(provider, selectedFlow, uri, Value, settings, parsed, budget);
+        var request = CreateRequest(provider, selectedFlow!, uri, Value, settings, parsed, budget);
         AcquisitionTimeoutSeconds = budget;
         var session = new DeferredSession(services.GetRequiredService<ICliOAuthSessionFactory>(), request,
             services.GetRequiredService<ICliConsole>(), parsed.GetValue(interaction));
@@ -69,13 +66,26 @@ internal sealed class CliOAuthOptions
         {
             return target.WithAuthentication(ConnectionAuthentication.OAuthInteractive(new()
             {
-                ClientId = request.ClientId, Authority = request.Authority, RedirectUri = request.RedirectUri,
-                Scopes = request.Scopes, LoginHint = request.LoginHint, AcquisitionTimeoutSeconds = request.TimeoutSeconds,
-                AllowInteraction = true, Session = session
+                ClientId = request.ClientId,
+                Authority = request.Authority,
+                RedirectUri = request.RedirectUri,
+                Scopes = request.Scopes,
+                LoginHint = request.LoginHint,
+                AcquisitionTimeoutSeconds = request.TimeoutSeconds,
+                AllowInteraction = true,
+                Session = session
             }));
         }
         catch (ArgumentException) { session.Dispose(); throw new CliOAuthInputException("OAuth requires a trusted HTTPS authority, loopback HTTP redirect and nonempty scopes."); }
     }
+    private static void ValidateProviderFlow(string provider, string? selectedFlow)
+    {
+        if (selectedFlow is not ("browser" or "device-code") || provider is not ("Microsoft.Data.SqlClient" or "Snowflake.Data"))
+            throw new ConnectionAuthenticationException(AuthenticationDiagnosticCodes.UnsupportedAuthentication);
+        if (provider == "Snowflake.Data" && selectedFlow != "browser")
+            throw new ConnectionAuthenticationException(AuthenticationDiagnosticCodes.UnsupportedAuthentication);
+    }
+
     private CliOAuthRequest CreateRequest(string provider, string selectedFlow, ConnectionUri uri,
         Func<Option<string?>, string, string?> value, IConfiguration settings, ParseResult parsed, int budget)
     {
@@ -112,12 +122,20 @@ internal sealed class CliOAuthOptions
         if (value(account, "Account") is not null) throw new CliOAuthInputException("--oauth-account applies only to Snowflake.");
         var selectedTenant = value(tenant, "Tenant");
         var selectedAuthority = value(authority, "Authority");
+        ValidateEntraTenant(selectedTenant, selectedAuthority);
+        var selectedClient = ReadEntraClient(value(clientId, "ClientId"));
+        selectedAuthority ??= selectedTenant is null ? null : "https://login.microsoftonline.com/" + selectedTenant;
+        return new(selectedClient, ReadAuthority(selectedAuthority, true, null), null);
+    }
+    private static void ValidateEntraTenant(string? selectedTenant, string? selectedAuthority)
+    {
         if (selectedTenant is not null && selectedAuthority is not null) throw new CliOAuthInputException("Choose either --oauth-tenant or --oauth-authority.");
         if (selectedTenant is not null && !Guid.TryParse(selectedTenant, out _)) throw new CliOAuthInputException("Use an Entra tenant GUID or a full tenant --oauth-authority.");
-        var selectedClient = value(clientId, "ClientId");
+    }
+    private static string ReadEntraClient(string? selectedClient)
+    {
         if (!Guid.TryParse(selectedClient, out var id) || id == Guid.Empty) throw new CliOAuthInputException("Entra OAuth requires a registered public-client GUID in --oauth-client-id.");
-        selectedAuthority ??= selectedTenant is null ? null : "https://login.microsoftonline.com/" + selectedTenant;
-        return new(selectedClient!, ReadAuthority(selectedAuthority, true, null), null);
+        return selectedClient!;
     }
     private Identity ReadSnowflakeIdentity(ConnectionUri uri, Func<Option<string?>, string, string?> value)
     {

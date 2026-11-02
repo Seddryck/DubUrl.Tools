@@ -25,16 +25,7 @@ public sealed class ConnectorMirror(HttpClient httpClient)
             || archiveBaseUri.UserInfo.Length != 0 || archiveBaseUri.Query.Length != 0 || archiveBaseUri.Fragment.Length != 0)
             throw new ConnectorOperationException("mirror-url-invalid", "The mirror requires an absolute HTTPS base URL without credentials, query, or fragment.");
 
-        var entries = new List<ConnectorDefinition>();
-        foreach (var selection in selections)
-        {
-            if (!approvedCatalog.TryGet(selection.Id, out var entry) || entry is null || entry.Version != selection.Version)
-                throw new ConnectorOperationException("mirror-selection-invalid", "Every selection must identify an approved connector and its exact pinned version.");
-            if (!entries.Any(existing => existing.Provider.Equals(entry.Provider, StringComparison.OrdinalIgnoreCase)))
-                entries.Add(entry);
-        }
-        if (entries.Count == 0)
-            throw new ConnectorOperationException("mirror-selection-invalid", "Select at least one pinned connector.");
+        var entries = SelectEntries(approvedCatalog, selections);
 
         // Validate distribution metadata even when the host constructed the catalog in memory.
         ValidateCatalog(entries);
@@ -49,20 +40,7 @@ public sealed class ConnectorMirror(HttpClient httpClient)
             var baseUri = new Uri(archiveBaseUri.AbsoluteUri.TrimEnd('/') + "/");
             foreach (var entry in entries)
             {
-                cancellationToken.ThrowIfCancellationRequested();
-                var name = entry.Sha256!.ToLowerInvariant() + ".zip";
-                var path = Path.Combine(staging, name);
-                if (!File.Exists(path))
-                {
-                    await using var source = await httpClient.GetStreamAsync(entry.DownloadUri, cancellationToken).ConfigureAwait(false);
-                    await using (var target = File.Create(path))
-                        await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
-                    await using var archive = File.OpenRead(path);
-                    var digest = Convert.ToHexString(await SHA256.HashDataAsync(archive, cancellationToken).ConfigureAwait(false));
-                    if (!digest.Equals(entry.Sha256, StringComparison.OrdinalIgnoreCase))
-                        throw new ConnectorOperationException("pack-integrity", "An upstream connector archive does not match its approved SHA-256 digest.");
-                }
-                mirrored.Add(entry with { DownloadUri = new Uri(baseUri, name) });
+                mirrored.Add(await MirrorEntryAsync(entry, baseUri, staging, cancellationToken).ConfigureAwait(false));
             }
             ValidateCatalog(mirrored);
             await using (var catalog = File.Create(Path.Combine(staging, "connector-catalog.json")))
@@ -92,6 +70,40 @@ public sealed class ConnectorMirror(HttpClient httpClient)
         {
             if (Directory.Exists(staging)) Directory.Delete(staging, recursive: true);
         }
+    }
+
+    private static List<ConnectorDefinition> SelectEntries(ProviderPackCatalog approvedCatalog, IEnumerable<ConnectorMirrorSelection> selections)
+    {
+        var entries = new List<ConnectorDefinition>();
+        foreach (var selection in selections)
+        {
+            if (!approvedCatalog.TryGet(selection.Id, out var entry) || entry is null || entry.Version != selection.Version)
+                throw new ConnectorOperationException("mirror-selection-invalid", "Every selection must identify an approved connector and its exact pinned version.");
+            if (!entries.Any(existing => existing.Provider.Equals(entry.Provider, StringComparison.OrdinalIgnoreCase)))
+                entries.Add(entry);
+        }
+        if (entries.Count == 0)
+            throw new ConnectorOperationException("mirror-selection-invalid", "Select at least one pinned connector.");
+
+        return entries;
+    }
+
+    private async Task<ConnectorDefinition> MirrorEntryAsync(ConnectorDefinition entry, Uri baseUri, string staging, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var name = entry.Sha256!.ToLowerInvariant() + ".zip";
+        var path = Path.Combine(staging, name);
+        if (!File.Exists(path))
+        {
+            await using var source = await httpClient.GetStreamAsync(entry.DownloadUri, cancellationToken).ConfigureAwait(false);
+            await using (var target = File.Create(path))
+                await source.CopyToAsync(target, cancellationToken).ConfigureAwait(false);
+            await using var archive = File.OpenRead(path);
+            var digest = Convert.ToHexString(await SHA256.HashDataAsync(archive, cancellationToken).ConfigureAwait(false));
+            if (!digest.Equals(entry.Sha256, StringComparison.OrdinalIgnoreCase))
+                throw new ConnectorOperationException("pack-integrity", "An upstream connector archive does not match its approved SHA-256 digest.");
+        }
+        return entry with { DownloadUri = new Uri(baseUri, name) };
     }
 
     private static void ValidateCatalog(IReadOnlyList<ConnectorDefinition> entries)

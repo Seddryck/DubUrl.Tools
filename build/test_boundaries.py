@@ -1,7 +1,7 @@
 """Check extraction boundaries and release contracts without building applications."""
 from pathlib import Path
 import unittest
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -14,14 +14,7 @@ try
 {
     var password = Environment.GetEnvironmentVariable("DUBURL_CATALOG_SIGNING_PASSWORD");
     if (string.IsNullOrEmpty(password) || File.Exists(args[1]) || Directory.Exists(args[1])) throw new InvalidDataException();
-    DateTimeOffset? expiry = null;
-    var noExpiration = args.Length >= 5 && args[4].Equals("none", StringComparison.OrdinalIgnoreCase);
-    if (args.Length >= 5 && !noExpiration && !args[4].Equals("default", StringComparison.OrdinalIgnoreCase))
-    {
-        if (!DateTimeOffset.TryParse(args[4], CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed)
-            || parsed <= DateTimeOffset.UtcNow) throw new InvalidDataException();
-        expiry = parsed;
-    }
+    var (expiry, noExpiration) = ReadExpiry(args);
     var bytes = await File.ReadAllBytesAsync(args[0]);
     using (var stream = new MemoryStream(bytes)) ProviderPackCatalog.Read(stream);
     using var key = RSA.Create();
@@ -42,4 +35,17 @@ catch (Exception exception) when (exception is IOException or InvalidDataExcepti
 {
     Console.Error.WriteLine("Catalog signing failed. Check the input, encrypted key, password environment variable, and new output destination.");
     return 1;
+}
+
+static (DateTimeOffset? Expiry, bool NoExpiration) ReadExpiry(string[] args)
+{
+    DateTimeOffset? expiry = null;
+    var noExpiration = args.Length >= 5 && args[4].Equals("none", StringComparison.OrdinalIgnoreCase);
+    if (args.Length >= 5 && !noExpiration && !args[4].Equals("default", StringComparison.OrdinalIgnoreCase))
+    {
+        if (!DateTimeOffset.TryParse(args[4], CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed)
+            || parsed <= DateTimeOffset.UtcNow) throw new InvalidDataException();
+        expiry = parsed;
+    }
+    return (expiry, noExpiration);
 }

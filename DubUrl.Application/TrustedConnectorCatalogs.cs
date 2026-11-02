@@ -49,7 +49,7 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
 
         var entries = new List<ConnectorDefinition>();
         var diagnostics = new List<ProviderPackDiagnostic>();
-        var signed = new List<(ConnectorCatalogSource Source, ConnectorCatalogSignature Signature, string PayloadSha256)>();
+        var signed = new List<PendingCatalog>();
         if (official is not null)
         {
             diagnostics.AddRange(official.Diagnostics);
@@ -62,44 +62,9 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
         {
             try
             {
-                ValidateSource(source);
-                var bytes = await ReadAsync(source.Uri, source.BearerTokenEnvironmentVariable, cancellationToken).ConfigureAwait(false);
-                var digest = Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
-                ConnectorCatalogSignature? signature = null;
-                string? keyFingerprint = null;
-                if (source.TrustMode == "sha256" && !digest.Equals(source.Sha256, StringComparison.OrdinalIgnoreCase))
-                    throw new InvalidDataException();
-                if (source.TrustMode == "signed")
-                {
-                    signature = ConnectorCatalogSignature.Read(await ReadAsync(source.SignatureUri!, source.BearerTokenEnvironmentVariable, cancellationToken).ConfigureAwait(false));
-                    if (signature.SourceId != source.Id.ToLowerInvariant() || signature.Revision < source.MinimumRevision
-                        || (signature.ExpiresAt != 0 && signature.ExpiresAt <= _time.GetUtcNow().ToUnixTimeSeconds()))
-                        throw new InvalidDataException();
-                    using var key = RSA.Create();
-                    await ImportVerificationKeyAsync(key, source, signature.KeyId, cancellationToken).ConfigureAwait(false);
-                    if (!key.VerifyData(signature.Payload(bytes), Convert.FromBase64String(signature.Signature), HashAlgorithmName.SHA256, RSASignaturePadding.Pss))
-                        throw new InvalidDataException();
-                    keyFingerprint = Convert.ToHexString(SHA256.HashData(key.ExportSubjectPublicKeyInfo())).ToLowerInvariant();
-                }
-                using var stream = new MemoryStream(bytes);
-                // Ignore provenance claimed by the document: only the configured source establishes trust.
-                var catalog = ProviderPackCatalog.Read(stream);
-                if (catalog.Entries.Any(entry => !ConnectorCatalogSignature.IsSafeName(entry.Provider) || entry.Aliases is null || entry.Aliases.Any(alias => !ConnectorCatalogSignature.IsSafeName(alias))))
-                    throw new InvalidDataException();
-                var payloadDigest = signature is null ? null
-                    : Convert.ToHexString(SHA256.HashData(signature.Payload(bytes))).ToLowerInvariant();
-                if (signature is not null)
-                    await _revisions.CheckAsync(source.Id, signature.Revision, payloadDigest!, cancellationToken).ConfigureAwait(false);
-                entries.AddRange(catalog.Entries.Select(entry => entry with
-                {
-                    CatalogProvenance = new(source.Id, entry.Provider, entry.Version, digest, entry.Sha256)
-                    {
-                        TrustMode = source.TrustMode, SigningKeyId = signature?.KeyId,
-                        SigningKeySha256 = keyFingerprint, CatalogRevision = signature?.Revision,
-                    },
-                }));
-                if (signature is not null)
-                    signed.Add((source, signature, payloadDigest!));
+                var loaded = await LoadSourceAsync(source, cancellationToken).ConfigureAwait(false);
+                entries.AddRange(loaded.Entries);
+                if (loaded.Signed is not null) signed.Add(loaded.Signed);
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
             catch (Exception exception) when (IsSourceFailure(exception))
@@ -108,6 +73,67 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
             }
         }
 
+        ValidateUniqueNames(entries);
+        // Never advance a high-water mark for a malformed catalog or an ambiguous merge.
+        // The store compares and publishes under a cross-process lock. A concurrent newer load wins.
+        await AcceptRevisionsAsync(signed, entries, diagnostics, cancellationToken).ConfigureAwait(false);
+        return new ProviderPackCatalog(entries.OrderBy(entry => entry.Provider, StringComparer.Ordinal)) { Diagnostics = diagnostics };
+    }
+
+    private sealed record PendingCatalog(ConnectorCatalogSource Source, ConnectorCatalogSignature Signature, string PayloadSha256);
+    private sealed record LoadedCatalog(ConnectorDefinition[] Entries, PendingCatalog? Signed);
+
+    private async Task<LoadedCatalog> LoadSourceAsync(ConnectorCatalogSource source, CancellationToken cancellationToken)
+    {
+        ValidateSource(source);
+        var bytes = await ReadAsync(source.Uri, source.BearerTokenEnvironmentVariable, cancellationToken).ConfigureAwait(false);
+        var digest = Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+        ConnectorCatalogSignature? signature = null;
+        string? keyFingerprint = null;
+        if (source.TrustMode == "sha256" && !digest.Equals(source.Sha256, StringComparison.OrdinalIgnoreCase))
+            throw new InvalidDataException();
+        if (source.TrustMode == "signed")
+        {
+            (signature, keyFingerprint) = await VerifySignatureAsync(source, bytes, cancellationToken).ConfigureAwait(false);
+        }
+        using var stream = new MemoryStream(bytes);
+        // Ignore provenance claimed by the document: only the configured source establishes trust.
+        var catalog = ProviderPackCatalog.Read(stream);
+        if (catalog.Entries.Any(entry => !ConnectorCatalogSignature.IsSafeName(entry.Provider) || entry.Aliases is null || entry.Aliases.Any(alias => !ConnectorCatalogSignature.IsSafeName(alias))))
+            throw new InvalidDataException();
+        var payloadDigest = signature is null ? null
+            : Convert.ToHexString(SHA256.HashData(signature.Payload(bytes))).ToLowerInvariant();
+        if (signature is not null)
+            await _revisions.CheckAsync(source.Id, signature.Revision, payloadDigest!, cancellationToken).ConfigureAwait(false);
+        var entries = catalog.Entries.Select(entry => entry with
+        {
+            CatalogProvenance = new(source.Id, entry.Provider, entry.Version, digest, entry.Sha256)
+            {
+                TrustMode = source.TrustMode,
+                SigningKeyId = signature?.KeyId,
+                SigningKeySha256 = keyFingerprint,
+                CatalogRevision = signature?.Revision,
+            },
+        }).ToArray();
+        return new(entries, signature is null ? null : new(source, signature, payloadDigest!));
+    }
+
+    private async Task<(ConnectorCatalogSignature Signature, string Fingerprint)> VerifySignatureAsync(
+        ConnectorCatalogSource source, byte[] bytes, CancellationToken cancellationToken)
+    {
+        var signature = ConnectorCatalogSignature.Read(await ReadAsync(source.SignatureUri!, source.BearerTokenEnvironmentVariable, cancellationToken).ConfigureAwait(false));
+        if (signature.SourceId != source.Id.ToLowerInvariant() || signature.Revision < source.MinimumRevision
+            || (signature.ExpiresAt != 0 && signature.ExpiresAt <= _time.GetUtcNow().ToUnixTimeSeconds()))
+            throw new InvalidDataException();
+        using var key = RSA.Create();
+        await ImportVerificationKeyAsync(key, source, signature.KeyId, cancellationToken).ConfigureAwait(false);
+        if (!key.VerifyData(signature.Payload(bytes), Convert.FromBase64String(signature.Signature), HashAlgorithmName.SHA256, RSASignaturePadding.Pss))
+            throw new InvalidDataException();
+        return (signature, Convert.ToHexString(SHA256.HashData(key.ExportSubjectPublicKeyInfo())).ToLowerInvariant());
+    }
+
+    private static void ValidateUniqueNames(IEnumerable<ConnectorDefinition> entries)
+    {
         var names = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         foreach (var entry in entries.OrderBy(entry => entry.CatalogProvenance!.SourceId, StringComparer.Ordinal)
                      .ThenBy(entry => entry.Provider, StringComparer.Ordinal))
@@ -118,8 +144,11 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
                     throw new ConnectorOperationException("connector-catalog-collision",
                         $"Connector ID or alias '{name}' is ambiguous between catalog sources '{names[name]}' and '{source}'.");
             }
-        // Never advance a high-water mark for a malformed catalog or an ambiguous merge.
-        // The store compares and publishes under a cross-process lock. A concurrent newer load wins.
+    }
+
+    private async Task AcceptRevisionsAsync(IEnumerable<PendingCatalog> signed, List<ConnectorDefinition> entries,
+        List<ProviderPackDiagnostic> diagnostics, CancellationToken cancellationToken)
+    {
         foreach (var pending in signed)
         {
             try
@@ -134,7 +163,6 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
                 diagnostics.Add(new("connector-source-unavailable", $"Catalog source '{pending.Source.Id}' could not be loaded or verified."));
             }
         }
-        return new ProviderPackCatalog(entries.OrderBy(entry => entry.Provider, StringComparer.Ordinal)) { Diagnostics = diagnostics };
     }
 
     private static bool IsSourceFailure(Exception exception)
@@ -166,29 +194,40 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
         if (source.TrustedSigningKeys is null) throw new InvalidDataException();
         switch (source.TrustMode)
         {
-            case "sha256":
-                if (source.Sha256 is not { Length: 64 } || !source.Sha256.All(Uri.IsHexDigit)
-                    || source.SignatureUri is not null || source.TrustedSigningKeys.Count != 0)
-                    throw new InvalidDataException();
-                break;
-            case "unsigned":
-                if (!string.IsNullOrWhiteSpace(source.Sha256) || source.SignatureUri is not null || source.TrustedSigningKeys.Count != 0)
-                    throw new InvalidDataException();
-                break;
-            case "signed":
-                if (!string.IsNullOrWhiteSpace(source.Sha256) || source.SignatureUri is null || source.MinimumRevision < 1
-                    || source.TrustedSigningKeys.Count == 0 || source.TrustedSigningKeys.Any(key => key is null
-                        || !ConnectorCatalogSignature.IsSafeName(key.KeyId) || string.IsNullOrWhiteSpace(key.PublicKeyPath))
-                    || source.TrustedSigningKeys.Select(key => key.KeyId).Distinct(StringComparer.Ordinal).Count() != source.TrustedSigningKeys.Count)
-                    throw new InvalidDataException();
-                ValidateLocation(source.SignatureUri);
-                // Catalog bearer credentials may be used for the detached signature only on the same HTTPS origin.
-                if (source.Uri.Scheme != source.SignatureUri.Scheme || source.Uri.Authority != source.SignatureUri.Authority)
-                    throw new InvalidDataException();
-                break;
+            case "sha256": ValidateSha256Source(source); break;
+            case "unsigned": ValidateUnsignedSource(source); break;
+            case "signed": ValidateSignedSource(source); break;
             default: throw new InvalidDataException();
         }
     }
+
+    private static void ValidateSha256Source(ConnectorCatalogSource source)
+    {
+        if (source.Sha256 is not { Length: 64 } || !source.Sha256.All(Uri.IsHexDigit)
+            || source.SignatureUri is not null || source.TrustedSigningKeys.Count != 0)
+            throw new InvalidDataException();
+    }
+
+    private static void ValidateUnsignedSource(ConnectorCatalogSource source)
+    {
+        if (!string.IsNullOrWhiteSpace(source.Sha256) || source.SignatureUri is not null || source.TrustedSigningKeys.Count != 0)
+            throw new InvalidDataException();
+    }
+
+    private static void ValidateSignedSource(ConnectorCatalogSource source)
+    {
+        if (!string.IsNullOrWhiteSpace(source.Sha256) || source.SignatureUri is null || source.MinimumRevision < 1
+            || source.TrustedSigningKeys.Count == 0 || source.TrustedSigningKeys.Any(IsInvalidSigningKey)
+            || source.TrustedSigningKeys.Select(key => key.KeyId).Distinct(StringComparer.Ordinal).Count() != source.TrustedSigningKeys.Count)
+            throw new InvalidDataException();
+        ValidateLocation(source.SignatureUri);
+        // Catalog bearer credentials may be used for the detached signature only on the same HTTPS origin.
+        if (source.Uri.Scheme != source.SignatureUri.Scheme || source.Uri.Authority != source.SignatureUri.Authority)
+            throw new InvalidDataException();
+    }
+
+    private static bool IsInvalidSigningKey(ConnectorCatalogSigningKey key)
+        => key is null || !ConnectorCatalogSignature.IsSafeName(key.KeyId) || string.IsNullOrWhiteSpace(key.PublicKeyPath);
 
     private static void ValidateLocation(Uri uri)
     {

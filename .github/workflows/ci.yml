@@ -38,6 +38,9 @@ jobs:
         fetch-depth: 0
     - name: Select version-test SDK
       run: '''{"sdk":{"version":"8.0.416","rollForward":"disable"}}'' | Set-Content global.json'
+    - uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 8.0.416
     - uses: actions/setup-python@v6
       with:
         python-version: '3.13'
@@ -65,9 +68,6 @@ jobs:
         "schema=$schema" >> $env:GITHUB_OUTPUT
     - name: Test release guards
       run: ./build/Test-ReleaseGuards.ps1
-    - uses: actions/setup-dotnet@v6
-      with:
-        dotnet-version: 8.0.416
     - name: Test GitVersion against real release histories
       run: |
         dotnet tool install GitVersion.Tool --version 6.6.0 --tool-path artifacts/gitversion

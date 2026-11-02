@@ -55,5 +55,14 @@ class Boundaries(unittest.TestCase):
         for job in ("publish-application", "publish-cli-nuget", "publish-worker-nuget"):
             self.assertIn(job, jobs["github-release"]["needs"])
 
+    def test_gitversion_sdk_is_installed_before_tool_installation(self):
+        steps = self.workflow()["jobs"]["version"]["steps"]
+        installation = next(i for i, step in enumerate(steps)
+                            if step.get("uses") == "actions/setup-dotnet@v6"
+                            and str(step.get("with", {}).get("dotnet-version")) == "8.0.416")
+        gitversion = next(i for i, step in enumerate(steps)
+                          if step.get("uses", "").startswith("gittools/actions/gitversion/setup@"))
+        self.assertLess(installation, gitversion, "GitVersion installation requires the selected SDK first.")
+
 if __name__ == "__main__":
     unittest.main()

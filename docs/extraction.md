@@ -26,7 +26,7 @@ Provider packs and their official catalog remain Core release assets: their vers
 
 ## CI and release contract
 
-The workflow and GitVersion history tests are adapted from [DubUrl.Schema CI](https://github.com/Seddryck/DubUrl.Schema/blob/main/.github/workflows/ci.yml).
+The workflow and GitVersion configuration are adapted from [DubUrl.Schema CI](https://github.com/Seddryck/DubUrl.Schema/blob/main/.github/workflows/ci.yml).
 
 | Dimension | Evidence and decision |
 | --- | --- |

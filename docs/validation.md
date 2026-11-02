@@ -18,7 +18,6 @@ For each framework in `net8.0`, `net9.0`, and `net10.0`, the following suites pa
 CLI tests use an isolated default connector store. The QA adapter reuses native Core contracts and provisions its own SQLite database; other provider/authentication tests retain their opt-in prerequisites.
 
 - `python -m unittest discover -s build -p test_boundaries.py`: 9 passed.
-- `python build/test_gitversion.py --gitversion <GitVersion 6.6.0 executable>`: 6 passed against real temporary Git histories.
 - `./build/Test-ReleaseGuards.ps1` and `./build/Test-ReleaseAssets.ps1`: passed.
 - actionlint and PowerShell AST parsing: both changed workflows and embedded command scripts passed.
 

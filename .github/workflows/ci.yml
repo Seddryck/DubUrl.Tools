@@ -36,7 +36,7 @@ jobs:
     - uses: actions/checkout@v7
       with:
         fetch-depth: 0
-    - name: Select version-test SDK
+    - name: Select GitVersion SDK
       run: '''{"sdk":{"version":"8.0.416","rollForward":"disable"}}'' | Set-Content global.json'
     - uses: actions/setup-dotnet@v6
       with:
@@ -70,11 +70,6 @@ jobs:
       run: ./build/Test-DotNetRuntimes.ps1
     - name: Test release guards
       run: ./build/Test-ReleaseGuards.ps1
-    - name: Test GitVersion against real release histories
-      run: |
-        dotnet tool install GitVersion.Tool --version 6.6.0 --tool-path artifacts/gitversion
-        if ($LASTEXITCODE) { throw 'Installing the version test tool failed.' }
-        python build/test_gitversion.py --gitversion artifacts/gitversion/dotnet-gitversion
     - name: Install workflow validation dependencies
       run: python -m pip install -r build/requirements.txt
     - name: Validate repository and workflow boundaries

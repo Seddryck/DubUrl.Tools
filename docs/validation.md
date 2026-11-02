@@ -17,7 +17,7 @@ For each framework in `net8.0`, `net9.0`, and `net10.0`, the following suites pa
 
 CLI tests use an isolated default connector store. The QA adapter reuses native Core contracts and provisions its own SQLite database; other provider/authentication tests retain their opt-in prerequisites.
 
-- `python -m unittest discover -s build -p test_boundaries.py`: 6 passed.
+- `python -m unittest discover -s build -p test_boundaries.py`: 9 passed.
 - `python build/test_gitversion.py --gitversion <GitVersion 6.6.0 executable>`: 6 passed against real temporary Git histories.
 - `./build/Test-ReleaseGuards.ps1` and `./build/Test-ReleaseAssets.ps1`: passed.
 - actionlint and PowerShell AST parsing: both changed workflows and embedded command scripts passed.
@@ -39,3 +39,5 @@ No Linux/macOS native execution, Windows Arm64 execution, Windows installer comp
 The GitHub `release` environment has been created with a main-only deployment policy. NuGet trusted-publishing policies and publication of the pinned Core packages are prerequisites to merging this repository's extraction PR. See [the cutover guide](extraction.md).
 
 CI follow-up: moved SDK 8.0.416 installation before GitVersion setup. A regression check demonstrated that the original ordering failed and the corrected ordering passed; all six boundary checks and actionlint pass.
+
+SDK audit follow-up: all SDK setup sites were reviewed. Both complete seven-package tool families pass with SDK 10.0.403; SDK 8/9 are not installed on this host. Runtime-only setup reuses installed runtimes; 8 planner scenarios, 9 workflow checks, actionlint and script syntax pass. The net10.0 solution build passes. CLI/worker locked restores pass against a clean cache of published NuGet packages; only lock content hashes changed. Full application/provider test suites were not rerun for this workflow-only change. See [the per-job SDK/runtime decisions](sdk-runtime-audit.md).

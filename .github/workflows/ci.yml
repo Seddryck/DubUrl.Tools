@@ -66,6 +66,8 @@ jobs:
         }
         "duburl=$duburl" >> $env:GITHUB_OUTPUT
         "schema=$schema" >> $env:GITHUB_OUTPUT
+    - name: Test runtime setup decisions
+      run: ./build/Test-DotNetRuntimes.ps1
     - name: Test release guards
       run: ./build/Test-ReleaseGuards.ps1
     - name: Test GitVersion against real release histories
@@ -296,10 +298,9 @@ jobs:
     - name: Set up .NET SDK
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: |-
-          8.0.416
-          9.0.308
-          10.0.403
+        dotnet-version: 10.0.403
+    - name: Ensure catalog generator runtimes
+      run: ./build/Ensure-DotNetRuntimes.ps1 -Channels '8.0,9.0'
     - name: Download official connector catalog
       uses: actions/download-artifact@v7
       with:
@@ -421,10 +422,9 @@ jobs:
     - name: Set up .NET SDK
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: |-
-          8.0.416
-          9.0.308
-          10.0.403
+        dotnet-version: 10.0.403
+    - name: Ensure catalog generator runtimes
+      run: ./build/Ensure-DotNetRuntimes.ps1 -Channels '8.0,9.0'
     - name: Restore worker package project
       run: dotnet restore DubUrl.Worker/DubUrl.Worker.csproj --force-evaluate
     - name: Pack worker tool
@@ -635,13 +635,9 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v7
-    - name: Set up .NET SDK
-      uses: actions/setup-dotnet@v6
-      with:
-        dotnet-version: |-
-          8.0.416
-          9.0.308
-          10.0.403
+    - name: Ensure native smoke-test runtime
+      if: matrix.native
+      run: ./build/Ensure-DotNetRuntimes.ps1 -Channels ('${{ matrix.framework }}' -replace '^net', '') -RuntimeOnly
     - name: Download CLI publish outputs
       uses: actions/download-artifact@v7
       with:
@@ -807,6 +803,11 @@ jobs:
     - name: Block release while AppVeyor is configured
       run: |
         if (Test-Path appveyor.yml) { throw 'Remove the legacy publishing workflow before releasing.' }
+    - name: Select GitVersion SDK
+      run: '''{"sdk":{"version":"8.0.416","rollForward":"disable"}}'' | Set-Content global.json'
+    - uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 8.0.416
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@7417b1089e2c7de93510f1901d656ddf60bb024f
       with:

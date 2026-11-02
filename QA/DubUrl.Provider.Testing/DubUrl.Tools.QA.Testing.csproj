@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
+    <PackageReference Include="Npgsql" Version="10.0.3" />
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.14" />
+    <ProjectReference Include="../DubUrl.ProviderTesting/DubUrl.ProviderTesting.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageReference Include="NUnit" Version="5.0.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.15.0" PrivateAssets="all" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageReference Include="Moq" Version="4.21.0" />
+    <PackageReference Include="coverlet.collector" Version="10.1.0" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

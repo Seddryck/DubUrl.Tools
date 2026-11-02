@@ -41,3 +41,12 @@ The GitHub `release` environment has been created with a main-only deployment po
 CI follow-up: moved SDK 8.0.416 installation before GitVersion setup. A regression check demonstrated that the original ordering failed and the corrected ordering passed; all six boundary checks and actionlint pass.
 
 SDK audit follow-up: all SDK setup sites were reviewed. Both complete seven-package tool families pass with SDK 10.0.403; SDK 8/9 are not installed on this host. Runtime-only setup reuses installed runtimes; 8 planner scenarios, 9 workflow checks, actionlint and script syntax pass. The net10.0 solution build passes. CLI/worker locked restores pass against a clean cache of published NuGet packages; only lock content hashes changed. Full application/provider test suites were not rerun for this workflow-only change. See [the per-job SDK/runtime decisions](sdk-runtime-audit.md).
+
+## CodeFactor and prerelease inventory follow-up
+
+- Split the eleven flagged complex methods into catalog loading/verification, snapshot construction, mirror transfer, OAuth validation, command parsing/execution, and signing-expiry operations. Lizard reports no methods above cyclomatic complexity 15 in the eight affected C# files.
+- Use pinned `defusedxml` for project XML inspection; Bandit reports no findings in `build/test_boundaries.py`.
+- The failed inventory check compared mixed-case GitVersion prerelease labels against lowercase distribution filenames. Normalize the expected version to the builders' naming contract and report filename differences on failure.
+- Release inventory checks pass for both stable `1.2.0` and mixed-case prerelease `1.2.0-PullRequest1.6`, including missing assets, wrong frameworks, and private metadata rejection.
+- Validation: solution Release build for net10.0 (zero warnings/errors), 131 focused Application tests, 84 focused CLI tests, nine workflow boundary checks, Bandit, and Lizard.
+- Not rerun locally: full Application/CLI suites, worker/provider QA suites, net8.0/net9.0 test matrices, and distribution packaging. The existing CI matrix validates those on the pushed branch.

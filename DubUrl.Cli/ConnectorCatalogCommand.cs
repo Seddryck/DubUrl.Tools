@@ -76,7 +76,6 @@ internal static class ConnectorCatalogCommand
             catch (Exception exception) when (exception is CryptographicException or IOException or UnauthorizedAccessException or ArgumentException or FormatException)
             { return Report(console, asJson, "catalog-signing-failed", "Signing inputs could not be read or used. Check the encrypted key and password environment variable.", CliExitCodes.ProviderOperationFailed); }
             finally { key?.Dispose(); }
-
         }
 
         private Uri ReadArchiveBaseUri(ParseResult result)

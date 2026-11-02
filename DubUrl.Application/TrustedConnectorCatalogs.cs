@@ -99,8 +99,7 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
         using var stream = new MemoryStream(bytes);
         // Ignore provenance claimed by the document: only the configured source establishes trust.
         var catalog = ProviderPackCatalog.Read(stream);
-        if (catalog.Entries.Any(entry => !ConnectorCatalogSignature.IsSafeName(entry.Provider) || entry.Aliases is null || entry.Aliases.Any(alias => !ConnectorCatalogSignature.IsSafeName(alias))))
-            throw new InvalidDataException();
+        ValidateConnectorNames(catalog);
         var payloadDigest = signature is null ? null
             : Convert.ToHexString(SHA256.HashData(signature.Payload(bytes))).ToLowerInvariant();
         if (signature is not null)
@@ -116,6 +115,13 @@ public sealed class TrustedConnectorCatalogs(HttpClient httpClient, string? revi
             },
         }).ToArray();
         return new(entries, signature is null ? null : new(source, signature, payloadDigest!));
+    }
+
+    private static void ValidateConnectorNames(ProviderPackCatalog catalog)
+    {
+        if (catalog.Entries.Any(entry => !ConnectorCatalogSignature.IsSafeName(entry.Provider) || entry.Aliases is null
+            || entry.Aliases.Any(alias => !ConnectorCatalogSignature.IsSafeName(alias))))
+            throw new InvalidDataException();
     }
 
     private async Task<(ConnectorCatalogSignature Signature, string Fingerprint)> VerifySignatureAsync(

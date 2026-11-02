@@ -176,16 +176,27 @@ public sealed class ConnectorCatalogBuilder
 
     private static void ValidateOptions(ConnectorCatalogBuildOptions options)
     {
-        if (!ConnectorCatalogSignature.IsSafeName(options.SourceId) || options.SourceId.Equals("official", StringComparison.OrdinalIgnoreCase)
-            || string.IsNullOrWhiteSpace(options.InputDirectory) || string.IsNullOrWhiteSpace(options.OutputDirectory))
-            throw Failure("catalog-options-invalid", "Specify input and output folders and a unique source ID other than 'official'.");
+        ValidateSourceIdentity(options);
         ValidateUri(options.ArchiveBaseUri, allowFile: false);
         if (options.CatalogUri is not null) ValidateUri(options.CatalogUri, allowFile: true);
         if (options.TrustMode == "signed")
         {
             ValidateSigningOptions(options);
         }
-        else if (options.TrustMode is not ("sha256" or "unsigned") || options.SigningKey is not null
+        else
+            ValidateUnsignedOptions(options);
+    }
+
+    private static void ValidateSourceIdentity(ConnectorCatalogBuildOptions options)
+    {
+        if (!ConnectorCatalogSignature.IsSafeName(options.SourceId) || options.SourceId.Equals("official", StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(options.InputDirectory) || string.IsNullOrWhiteSpace(options.OutputDirectory))
+            throw Failure("catalog-options-invalid", "Specify input and output folders and a unique source ID other than 'official'.");
+    }
+
+    private static void ValidateUnsignedOptions(ConnectorCatalogBuildOptions options)
+    {
+        if (options.TrustMode is not ("sha256" or "unsigned") || options.SigningKey is not null
             || options.PublisherStatePath is not null || options.NoExpiration || options.ExpiresAt is not null)
             throw Failure("catalog-options-invalid", "Select sha256, unsigned, or signed. Signing options are valid only in signed mode.");
     }

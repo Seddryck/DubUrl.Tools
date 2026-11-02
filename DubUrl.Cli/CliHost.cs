@@ -76,5 +76,4 @@ public static class CliHost
         }
         return false;
     }
-
 }

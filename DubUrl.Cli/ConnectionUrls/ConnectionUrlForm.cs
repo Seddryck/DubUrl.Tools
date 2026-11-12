@@ -99,12 +99,53 @@ internal sealed class ConnectionUrlForm(Route route, string locationId, Location
                 && IPAddress.TryParse(address, out var ipv6) && ipv6.AddressFamily == AddressFamily.InterNetworkV6)
                 return "[" + FormatIpv6(ipv6) + "]";
         }
-        else if (!value.Any(character => char.IsWhiteSpace(character) || char.IsControl(character) || "/#?@%\\[]".Contains(character))
-            && Uri.TryCreate("https://" + value, UriKind.Absolute, out var uri) && uri.Host.Length > 0)
+        else if (!value.Any(IsForbiddenHostCharacter) && EncodeDomain(value) is { } domain)
         {
-            return uri.IdnHost.ToLowerInvariant();
+            return domain;
         }
         throw new ConnectionUrlInputException(id, "Enter a valid hostname or IP address.");
+    }
+
+    private static bool IsForbiddenHostCharacter(char character)
+        => char.IsWhiteSpace(character) || character < 0x20 || character is '\u007f' or '\ufeff'
+            || "#/:<>?@%\\[]^|".Contains(character);
+
+    private static string? EncodeDomain(string value)
+    {
+        var idn = new IdnMapping();
+        var parts = value.Split(['.', '\u3002', '\uff0e', '\uff61']);
+        try
+        {
+            for (var i = 0; i < parts.Length; i++)
+            {
+                var label = parts[i];
+                if (label.Any(character => !char.IsAscii(character)))
+                    label = idn.GetAscii(label);
+                if (label.StartsWith("xn--", StringComparison.OrdinalIgnoreCase))
+                    idn.GetUnicode(label); // Validate a user-supplied Punycode label too.
+                parts[i] = label.ToLowerInvariant();
+            }
+        }
+        catch (ArgumentException)
+        {
+            return null;
+        }
+
+        var domain = string.Join('.', parts);
+        if (domain.Length == 0 || domain.Any(IsForbiddenHostCharacter))
+            return null;
+
+        // Like the web builder's URL parser, a numeric final label makes this an IPv4 candidate.
+        var addressParts = parts.Length > 1 && parts[^1].Length == 0 ? parts[..^1] : parts;
+        var last = addressParts[^1];
+        if (last.Length == 0 || !(last.All(char.IsAsciiDigit)
+            || last.StartsWith("0x", StringComparison.Ordinal) && last.Skip(2).All(char.IsAsciiHexDigit)))
+            return domain;
+
+        var ipv4Text = string.Join('.', addressParts.Select(part => part == "0x" ? "0" : part));
+        return IPAddress.TryParse(ipv4Text, out var address) && address.AddressFamily == AddressFamily.InterNetwork
+            ? address.ToString()
+            : null;
     }
 
     private static string FormatIpv6(IPAddress address)

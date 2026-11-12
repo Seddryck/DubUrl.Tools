@@ -26,7 +26,7 @@ duburl --version
 
 ## Build a connection URL
 
-Run `duburl connection new` in a terminal. Type to filter the choices, use Up and Down to highlight an option, and press Enter to select it. For a text prompt, Enter accepts the displayed default or skips an optional field. Press Ctrl+C to cancel.
+Run `duburl connection new` in a terminal. Type to find a matching choice, use Up and Down to move between options, and press Enter to select one. For a text prompt, Enter accepts the displayed default or skips an optional field. Press Ctrl+C to cancel.
 
 The wizard uses the bundled Providers catalog, so it works offline. It prints the URL on its own line and can show how to supply credentials when you connect.
 

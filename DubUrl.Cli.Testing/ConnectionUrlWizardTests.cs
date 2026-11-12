@@ -104,9 +104,29 @@ public class ConnectionUrlWizardTests
         Assert.That(Catalog.GetTlsModes(route, auth).Select(item => item.Id), Is.EqualTo(new[] { "verified" }));
     }
 
+    [TestCase("1.2.3.256")]
+    [TestCase("nonip.123")]
+    [TestCase("[::1]:443#[x]")]
+    public void RejectsInvalidHostsLikeTheWebBuilder(string host)
+    {
+        var route = FindRoute("npgsql");
+        var endpoint = route.Locations[0];
+        var auth = Catalog.GetAuthentication(route, endpoint).First();
+        var form = Catalog.CreateForm(route, endpoint, auth);
+
+        Assert.That(() => form.ValidateField("host", host), Throws.TypeOf<ConnectionUrlInputException>()
+            .With.Message.EqualTo("Enter a valid hostname or IP address."));
+    }
+
     // These expected URLs are also covered by DubUrl's web builder tests.
     [TestCase("npgsql", null, "password", "verified", "host=[::1];database=analytics/data;username=qa+analyst;port=05432;searchPath=team & reporting",
         "postgres://qa%2Banalyst@[::1]/analytics%2Fdata?SSL%20Mode=VerifyFull&GSS%20Encryption%20Mode=Disable&Search%20Path=team%20%26%20reporting")]
+    [TestCase("npgsql", null, "password", "default", "host=Bücher.example;database=sales;username=qa",
+        "postgres://qa@xn--bcher-kva.example/sales")]
+    [TestCase("npgsql", null, "password", "default", "host=0177.0.0.1;database=sales;username=qa",
+        "postgres://qa@127.0.0.1/sales")]
+    [TestCase("npgsql", null, "password", "default", "host=::ffff:192.0.2.1;database=sales;username=qa",
+        "postgres://qa@[::ffff:c000:201]/sales")]
     [TestCase("sqlclient", null, "password", "default", "host=sql.example;database=reporting;username=analyst;instance=reporting;port=1433",
         "mssql://analyst@sql.example:1433/reporting/reporting")]
     [TestCase("mysql-odbc", null, "password", "verified", "host=db.example;database=db;username=qa;port=03308",

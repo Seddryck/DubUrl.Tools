@@ -79,7 +79,7 @@ if __name__ == "__main__":
         (b"Host:", b"db.example.com\r"),
         (b"Port [3306]:", b"70000\r"),
         (b"Enter a port from 1 to 65535.", b"\r"),
-        (b"Database name:", b"sales\r"),
+        (b"Database:", b"sales\r"),
         (b"Authentication", b"\r"),
         (b"Username:", b"alice\r"),
         (b"Require verified TLS", b"\x1b[B\r"),

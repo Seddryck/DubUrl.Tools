@@ -74,6 +74,11 @@ public static class CliHost
             services.GetRequiredService<ICliConsole>().Error.WriteLine("Invalid connection check arguments. Run 'duburl connection check --help' for usage.");
             return true;
         }
+        if (args is ["connection", "new", ..])
+        {
+            services.GetRequiredService<ICliConsole>().Error.WriteLine("Invalid wizard arguments. Run 'duburl connection new --help' for usage.");
+            return true;
+        }
         return false;
     }
 }

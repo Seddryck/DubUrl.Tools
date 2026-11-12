@@ -2,6 +2,7 @@ using System.CommandLine;
 using System.Text.Json;
 using DubUrl.Application;
 using DubUrl.Authentication;
+using DubUrl.Cli.ConnectionUrls;
 using DubUrl.Mapping;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,8 @@ internal static class ConnectionCommand
     private sealed record CheckInvocation(string? Url, string? Name, string? Environment, ConnectionCheckOptions Options, string? Format);
     public static Command Create(IServiceProvider services, CancellationToken cancellationToken)
     {
-        var group = new Command("connection", "Check database connections and access.");
+        var group = new Command("connection", "Build and check database connection URLs.");
+        group.Subcommands.Add(ConnectionNewCommand.Create(services));
         var check = new Command("check", "Open a database and optionally execute one engine or zero-row table check.");
         var url = new Argument<string?>("url") { Arity = ArgumentArity.ZeroOrOne };
         var name = new Option<string?>("--connection") { Description = "Named connection from configuration." };

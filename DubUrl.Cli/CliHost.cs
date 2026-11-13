@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.CommandLine.Parsing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DubUrl.Cli;
@@ -17,11 +18,14 @@ public static class CliHost
             ? CliRootCommandFactory.CreateCatalogPublisher(services, cancellationToken)
             : CliRootCommandFactory.Create(services, cancellationToken);
         var parseResult = root.Parse(args.Length == 0 ? ["--help"] : args);
-        if (parseResult.Errors.Count > 0 && ReportSensitiveParseError(args, services))
+        var inspectingSchema = parseResult.CommandResult is
+            { Command.Name: "inspect", Parent: CommandResult { Command.Name: "schema" } };
+        if (parseResult.Errors.Count > 0 && ReportSensitiveParseError(args, services, inspectingSchema))
             return CliExitCodes.InvalidInput;
         try
         {
-            var exitCode = await parseResult.InvokeAsync(cancellationToken: cancellationToken);
+            var invocation = inspectingSchema ? new InvocationConfiguration { EnableDefaultExceptionHandler = false } : null;
+            var exitCode = await parseResult.InvokeAsync(invocation, cancellationToken);
             if (cancellationToken.IsCancellationRequested)
             {
                 services.GetRequiredService<ICliConsole>().Error.WriteLine("Operation cancelled.");
@@ -42,7 +46,7 @@ public static class CliHost
             return CliExitCodes.UnexpectedError;
         }
     }
-    private static bool ReportSensitiveParseError(string[] args, IServiceProvider services)
+    private static bool ReportSensitiveParseError(string[] args, IServiceProvider services, bool inspectingSchema)
     {
         if (args.Length >= 2 && args[0] == "catalog" && args[1] == "create")
         {
@@ -55,6 +59,11 @@ public static class CliHost
                 diagnostics = new[] { new { code = "catalog-arguments-invalid", message } },
             }, CliJson.Options));
             else console.Error.WriteLine(message);
+            return true;
+        }
+        if (inspectingSchema)
+        {
+            services.GetRequiredService<ICliConsole>().Error.WriteLine("Invalid schema inspection arguments. Run 'duburl schema inspect --help' for usage.");
             return true;
         }
         if (args.Any(argument => CliConnectionOptions.Names.Contains(argument.Split('=')[0])))

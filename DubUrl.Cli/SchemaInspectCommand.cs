@@ -2,6 +2,7 @@ using System.CommandLine;
 using DubUrl.Application;
 using DubUrl.Discovery;
 using DubUrl.Mapping;
+using DubUrl.Parsing;
 using DubUrl.Schema.Documents;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,8 +12,9 @@ internal static partial class SchemaCommand
 {
     private static Command CreateInspect(IServiceProvider services, CancellationToken cancellationToken)
     {
-        var connection = new Option<string?>("--connection") { Description = "Named connection from configuration. Exactly one connection selector is required." };
-        var environment = new Option<string?>("--connection-env") { Description = "Environment variable containing a URL. Exclusive with --connection." };
+        var url = new Argument<string?>("url") { Arity = ArgumentArity.ZeroOrOne, Description = "Connection URL. Specify exactly one of <url>, --connection or --connection-env." };
+        var connection = new Option<string?>("--connection") { Description = "Named connection from configuration." };
+        var environment = new Option<string?>("--connection-env") { Description = "Environment variable containing a connection URL." };
         var tables = new Option<string[]>("--table")
         {
             Description = "Qualified table name; repeat to select several. Omit to inspect all visible tables.",
@@ -28,15 +30,19 @@ internal static partial class SchemaCommand
         var command = new Command("inspect", "Read database metadata and export a versioned schema document. Does not change the database.");
         var authentication = new CliAuthentication();
         authentication.AddTo(command);
+        command.Arguments.Add(url);
         foreach (var option in new Option[] { connection, environment, tables, schemas, output, format, partial, references, basic, readOnly }) command.Options.Add(option);
         command.SetAction((result, actionToken) => ExecuteSafelyAsync(services, "inspect", async () =>
         {
             using var authenticationLifetime = authentication;
             actionToken.ThrowIfCancellationRequested();
+            var directUrl = result.GetValue(url);
             var name = result.GetValue(connection);
             var variable = result.GetValue(environment);
-            if (string.IsNullOrWhiteSpace(name) == string.IsNullOrWhiteSpace(variable))
-                throw new CliInputException("Specify exactly one of --connection or --connection-env.");
+            if (new[] { directUrl, name, variable }.Count(value => value is not null) != 1)
+                throw new CliInputException("Specify exactly one of <url>, --connection or --connection-env.");
+            if (name?.Contains("://", StringComparison.Ordinal) == true)
+                throw new CliInputException("--connection expects a configured name. Pass a URL as the positional argument to 'duburl schema inspect <url>'.");
             var path = result.GetValue(output);
             var outputFormat = InspectOutputFormat(result.GetValue(format), path);
             var selected = InspectTables(result.GetValue(tables) ?? []);
@@ -49,7 +55,9 @@ internal static partial class SchemaCommand
             };
             if (result.GetValue(basic))
                 options = options with { Features = [SchemaFeature.Tables, SchemaFeature.Columns, SchemaFeature.PrimaryKeys, SchemaFeature.ForeignKeys] };
-            var value = ResolveConnection(services, name, variable);
+            var value = directUrl ?? ResolveConnection(services, name, variable);
+            if (!ConnectionUri.TryParse(value, out _))
+                throw new CliInputException("The selected connection URL is invalid.");
             var target = authentication.Configure(services, result, value);
             if (result.GetValue(readOnly))
             {

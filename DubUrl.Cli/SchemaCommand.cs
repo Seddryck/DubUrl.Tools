@@ -270,13 +270,13 @@ internal static partial class SchemaCommand
             var environmentValue = Environment.GetEnvironmentVariable(environmentName);
             return !string.IsNullOrWhiteSpace(environmentValue)
                 ? environmentValue
-                : throw new CliInputException($"Environment variable '{environmentName}' is not set.");
+                : throw new CliInputException("The selected connection environment variable is unset or empty.");
         }
 
         var configuration = services.GetRequiredService<IConfiguration>();
         return configuration[$"ConnectionStrings:{name}"] is { Length: > 0 } configuredValue
             ? configuredValue
-            : throw new CliInputException($"Named connection '{name}' was not found in configuration.");
+            : throw new CliInputException("The selected named connection was not found in configuration.");
     }
 
     private static void WriteValidationResult(IServiceProvider services, SchemaValidationResult result, bool json)

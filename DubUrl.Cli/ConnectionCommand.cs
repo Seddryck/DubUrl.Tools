@@ -1,9 +1,12 @@
 using System.CommandLine;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using DubUrl.Application;
 using DubUrl.Authentication;
 using DubUrl.Cli.ConnectionUrls;
-using DubUrl.Mapping;
+using DubUrl.Core.ProviderPacks;
+using DubUrl.Parsing;
+using DubUrl.Rewriting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -52,10 +55,11 @@ internal static class ConnectionCommand
     {
         using var authenticationLifetime = authentication;
         var console = services.GetRequiredService<ICliConsole>();
+        string? url = null;
         try
         {
             if (request.Format is not (null or "human" or "json")) throw new ArgumentException("Output format must be human or json.");
-            var url = ResolveTarget(services, request.Url, request.Name, request.Environment);
+            url = ResolveTarget(services, request.Url, request.Name, request.Environment);
             var target = authentication.Configure(services, parsed, url);
             if (readOnly) target = target.WithReadOnly();
             var options = request.Options with { AuthenticationTimeoutSeconds = authentication.AcquisitionTimeoutSeconds };
@@ -79,6 +83,20 @@ internal static class ConnectionCommand
             Write(console, new(false, GetMode(request.Options), null, 0, [new("invalidInput", error.Message)]), request.Format == "json");
             return CliExitCodes.InvalidInput;
         }
+        catch (SchemeNotFoundException) when (url is not null)
+        {
+            var installers = FindConnectorInstallCommands(services, url);
+            if (installers.Length == 0)
+            {
+                Write(console, InvalidResult(request.Options), request.Format == "json");
+                return CliExitCodes.InvalidInput;
+            }
+
+            var diagnostic = new ConnectionCheckDiagnostic("providerNotFound",
+                $"The connector for this connection URL is unavailable. Run {string.Join(" or ", installers)}.");
+            Write(console, new(false, GetMode(request.Options), null, 0, [diagnostic]), request.Format == "json");
+            return CliExitCodes.ProviderNotFound;
+        }
         catch (Exception exception) when (exception is ArgumentException or NotSupportedException or DubUrlException)
         {
             // Do not emit parser/provider exception messages: they may contain URL components or paths.
@@ -86,6 +104,34 @@ internal static class ConnectionCommand
             return CliExitCodes.InvalidInput;
         }
     }
+
+    private static string[] FindConnectorInstallCommands(IServiceProvider services, string url)
+    {
+        if (!ConnectionUri.TryParse(url, out var uri) || uri is null)
+            return [];
+        var parts = uri.Scheme.Canonical.Split('+');
+        var alias = parts is [var database, "odbc" or "oledb" or "adbc"]
+            ? $"{parts[1]}+{database}" : uri.Scheme.Canonical;
+
+        ProviderPackCatalog? catalog;
+        try { catalog = services.GetService<ProviderPackCatalog>(); }
+        catch (Exception error) when (error is ConnectorOperationException or ArgumentException or InvalidOperationException
+            or IOException or UnauthorizedAccessException)
+        { return []; }
+
+        return catalog?.Entries
+            .Where(entry => entry.DownloadUri is not null && IsInstallCommandId(entry.Provider)
+                && entry.Schemes.Contains(alias, StringComparer.OrdinalIgnoreCase)
+                && (entry.RuntimeIdentifiers.Count == 0
+                    || entry.RuntimeIdentifiers.Contains(RuntimeInformation.RuntimeIdentifier, StringComparer.OrdinalIgnoreCase)))
+            .Select(entry => $"'duburl connector install {entry.Provider}'")
+            .ToArray() ?? [];
+    }
+
+    private static bool IsInstallCommandId(string id)
+        => id.Length > 0 && char.IsAsciiLetterOrDigit(id[0])
+            && id.All(character => char.IsAsciiLetterOrDigit(character) || character is '.' or '_' or '-');
+
     private static int GetExitCode(ConnectionCheckResult result)
     {
         if (result.Success) return CliExitCodes.Success;

@@ -26,7 +26,7 @@
         <Version>1.2.0</Version>
         <DubUrlVersion Condition="'$(DubUrlVersion)' == ''">0.56.0</DubUrlVersion>
         <SchemaPackageVersion Condition="'$(SchemaPackageVersion)' == ''">0.55.1</SchemaPackageVersion>
-		<ConnectorCatalogVersion Condition="'$(ConnectorCatalogVersion)' == ''">0.55.0</ConnectorCatalogVersion>
+		<ConnectorCatalogTag Condition="'$(ConnectorCatalogTag)' == ''">v0.55.0</ConnectorCatalogTag>
         <Authors>Cédric L. Charlier</Authors>
 		<Owners>Seddryck</Owners>
 		<Company>nbiguity</Company>

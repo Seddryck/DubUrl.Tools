@@ -1,5 +1,8 @@
 using System.Data.Common;
 using System.Text;
+using DubUrl.Application;
+using DubUrl.Discovery;
+using DubUrl.Schema;
 using DubUrl.Schema.Documents;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
@@ -97,6 +100,35 @@ public class SchemaInspectCommandTests
         Assert.That(string.IsNullOrEmpty(console.StandardOutput), Is.EqualTo(!partial));
     }
 
+    [TestCase("yaml")]
+    [TestCase("json")]
+    public async Task Inspect_PrintsEachCatalogDiagnosticWithItsTableOnStderr(string format)
+    {
+        var table = new MetadataName("Employee", "HumanResources");
+        var diagnostics = new DiscoveryDiagnostic[]
+        {
+            new("SDI009", SchemaFeature.Columns, MetadataCoverage.Unrepresentable,
+                "Column OrganizationNode. A column type cannot be represented. Native definition: hierarchyid", table),
+            new("SDI009", SchemaFeature.Generation, MetadataCoverage.Unrepresentable,
+                "Column OrganizationLevel. A generated expression cannot be represented. Native definition: ([OrganizationNode].\n[GetLevel]())", table),
+            new("SDI009", SchemaFeature.Checks, MetadataCoverage.Unrepresentable,
+                "A check expression cannot be represented.", new("Sales.Order", "Sales"))
+        };
+        var console = new TestConsole();
+        await using var services = CliComposition.CreateDefault(console, Configuration());
+        var exit = await CliHost.InvokeAsync(["schema", "inspect", "--connection", "source", "--output-format", format],
+            new DiagnosticServices(services, diagnostics));
+
+        Assert.That(exit, Is.EqualTo(CliExitCodes.InspectionFailed));
+        Assert.That(console.StandardOutput, Is.Empty);
+        Assert.That(console.StandardError.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), Is.EqualTo(new[]
+        {
+            "SDI009: HumanResources.Employee — Column OrganizationNode. A column type cannot be represented. Native definition: hierarchyid",
+            "SDI009: HumanResources.Employee — Column OrganizationLevel. A generated expression cannot be represented. Native definition: ([OrganizationNode].\\u000a[GetLevel]())",
+            "SDI009: Sales.\"Sales.Order\" — A check expression cannot be represented."
+        }));
+    }
+
     [TestCase("schema inspect")]
     [TestCase("schema inspect --connection source --connection-env ANY")]
     [TestCase("schema inspect --connection source --output unknown.txt")]
@@ -153,6 +185,24 @@ public class SchemaInspectCommandTests
     private string Url() => "sqlite:///" + path.Replace('\\', '/');
     private IConfiguration Configuration() => new ConfigurationBuilder().AddInMemoryCollection(
         new Dictionary<string, string?> { ["ConnectionStrings:source"] = Url() }).Build();
+
+    private sealed class DiagnosticServices(IServiceProvider inner, DiscoveryDiagnostic[] diagnostics)
+        : IServiceProvider, ISchemaInspectionService
+    {
+        public object? GetService(Type type)
+            => type == typeof(ISchemaInspectionService) ? this : inner.GetService(type);
+
+        public Task<SchemaExportResult> InspectAsync(ConnectionUrl connection, DiscoveryOptions? options = null,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult(new SchemaExportResult(false,
+                new SchemaInspectionResult(null, false, false, new Dictionary<SchemaFeature, MetadataCoverage>(), diagnostics),
+                null, diagnostics));
+
+        public Task<SchemaExportResult> InspectAsync(DbConnection borrowed, ISchemaMetadataReader reader,
+            DiscoveryOptions? options = null, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException();
+    }
+
     private sealed class TestConsole : ICliConsole
     {
         private readonly StringWriter output = new(), error = new();

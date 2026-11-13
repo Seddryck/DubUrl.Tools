@@ -46,8 +46,9 @@ internal static partial class SchemaCommand
                 Schemas = result.GetValue(schemas) ?? [],
                 AllowPartial = result.GetValue(partial),
                 IncludeReferencedTables = result.GetValue(references),
-                Features = result.GetValue(basic) ? [SchemaFeature.Tables, SchemaFeature.Columns, SchemaFeature.PrimaryKeys, SchemaFeature.ForeignKeys] : Enum.GetValues<SchemaFeature>()
             };
+            if (result.GetValue(basic))
+                options = options with { Features = [SchemaFeature.Tables, SchemaFeature.Columns, SchemaFeature.PrimaryKeys, SchemaFeature.ForeignKeys] };
             var value = ResolveConnection(services, name, variable);
             var target = authentication.Configure(services, result, value);
             if (result.GetValue(readOnly))
@@ -62,12 +63,33 @@ internal static partial class SchemaCommand
                 target, options, actionToken).ConfigureAwait(false);
             var console = services.GetRequiredService<ICliConsole>();
             foreach (var diagnostic in operation.Diagnostics)
-                console.Error.WriteLine($"{diagnostic.Code}: {diagnostic.Message}");
+                console.Error.WriteLine(FormatInspectionDiagnostic(diagnostic));
             if (!operation.IsSuccess) return InspectionFailureExitCode(operation);
             WriteInspection(services, operation, path, outputFormat, actionToken);
             return operation.Inspection.IsComplete ? CliExitCodes.Success : CliExitCodes.InspectionIncomplete;
         }, result.GetValue(format) == "json"));
         return command;
+    }
+
+    private static string FormatInspectionDiagnostic(DiscoveryDiagnostic diagnostic)
+    {
+        if (diagnostic.Code != "SDI009")
+            return $"{diagnostic.Code}: {diagnostic.Message}";
+
+        var location = diagnostic.Object is { } table
+            ? string.Join(".", new[] { table.Catalog, table.Database, table.Schema, table.Name }
+                .OfType<string>().Select(QuoteDiagnosticIdentifier)) + " — "
+            : "";
+        return $"{diagnostic.Code}: {SingleLine(location + diagnostic.Message)}";
+
+        static string QuoteDiagnosticIdentifier(string name)
+            => name.Length > 0 && !char.IsDigit(name[0]) && name.All(c => char.IsLetterOrDigit(c) || c is '_' or '$')
+                ? name : "\"" + name.Replace("\"", "\"\"", StringComparison.Ordinal) + "\"";
+
+        static string SingleLine(string text)
+            => string.Concat(text.Select(c => char.IsControl(c) || char.GetUnicodeCategory(c) is
+                System.Globalization.UnicodeCategory.LineSeparator or System.Globalization.UnicodeCategory.ParagraphSeparator
+                ? $"\\u{(int)c:x4}" : c.ToString()));
     }
 
     private static SchemaDocumentFormat InspectOutputFormat(string? format, string? path)

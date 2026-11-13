@@ -9,6 +9,9 @@ namespace DubUrl.Cli.Testing;
 
 public class SchemaInspectCommandTests
 {
+    private const string ExampleUrl = "mssql://example-user:synthetic-password@localhost/db?AccessToken=synthetic-token";
+    private const string InvalidUrl = "mssql://example-user:synthetic-password@localhost:bad/db?AccessToken=synthetic-token";
+
     private string path = null!;
     [SetUp]
     public void Setup()
@@ -83,6 +86,18 @@ public class SchemaInspectCommandTests
         finally { Environment.SetEnvironmentVariable(variable, null); }
     }
 
+    [Test]
+    public async Task Inspect_PositionalUrl_ExportsSchema()
+    {
+        var console = new TestConsole();
+        await using var services = CliComposition.CreateDefault(console);
+        var code = await CliHost.InvokeAsync(["schema", "inspect", Url(), "--basic", "--output-format", "json"], services);
+
+        Assert.That(code, Is.EqualTo(CliExitCodes.Success), console.StandardError);
+        using var json = System.Text.Json.JsonDocument.Parse(console.StandardOutput);
+        Assert.That(json.RootElement.GetProperty("tables").GetArrayLength(), Is.EqualTo(2));
+    }
+
     [TestCase(false)]
     [TestCase(true)]
     public async Task Inspect_FilteredExternalReference_StrictAndPartialHaveSeparateOutput(bool partial)
@@ -108,6 +123,27 @@ public class SchemaInspectCommandTests
         var code = await CliHost.InvokeAsync(arguments.Split(' '), services);
         Assert.That(code, Is.EqualTo(CliExitCodes.InvalidInput));
         Assert.That(console.StandardOutput, Is.Empty);
+    }
+
+    [TestCase(ExampleUrl + " --connection source", "Specify exactly one")]
+    [TestCase(ExampleUrl + " --connection-env ANY", "Specify exactly one")]
+    [TestCase("--connection source --connection " + ExampleUrl, "Invalid schema inspection arguments")]
+    [TestCase("--connection " + ExampleUrl, "duburl schema inspect <url>")]
+    [TestCase("--connection " + InvalidUrl, "duburl schema inspect <url>")]
+    [TestCase("--connection-env " + ExampleUrl, "environment variable is unset or empty")]
+    [TestCase(InvalidUrl, "connection URL is invalid")]
+    [TestCase(ExampleUrl + " " + ExampleUrl, "Invalid schema inspection arguments")]
+    public async Task Inspect_InvalidConnectionSelectors_DoNotEchoSecrets(string selectors, string expectedMessage)
+    {
+        var console = new TestConsole();
+        await using var services = CliComposition.CreateDefault(console, Configuration());
+        var arguments = new[] { "schema", "inspect" }.Concat(selectors.Split(' ')).ToArray();
+        var code = await CliHost.InvokeAsync(arguments, services);
+
+        Assert.That(code, Is.EqualTo(CliExitCodes.InvalidInput));
+        Assert.That(console.StandardOutput, Is.Empty);
+        Assert.That(console.StandardError, Does.Contain(expectedMessage)
+            .And.Not.Contain("synthetic-password").And.Not.Contain("synthetic-token"));
     }
 
     [Test]

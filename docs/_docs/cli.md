@@ -70,4 +70,4 @@ See [Automate schema deployment]({{ '/docs/automate-schemas/' | relative_url }})
 
 ### Inspect an existing database
 
-Use duburl schema inspect --connection source --basic --output schema.yaml to export visible tables. The command supports JSON/YAML, repeated qualified table filters, strict/partial inspection and separate stderr diagnostics. See [inspection and export](schema-inspection.md) for the complete workflow and provider limits.
+Use `duburl schema inspect --connection source --basic --output schema.yaml` to export visible tables. Select the connection with a positional URL, `--connection <name>`, or `--connection-env <variable>`. The command supports JSON/YAML, repeated qualified table filters, strict/partial inspection and separate stderr diagnostics. See [inspection and export](schema-inspection.md) for the complete workflow and provider limits.

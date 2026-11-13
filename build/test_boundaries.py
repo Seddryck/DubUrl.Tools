@@ -27,7 +27,9 @@ class Boundaries(unittest.TestCase):
             for ref in ET.parse(project).iter("PackageReference"):
                 name = ref.attrib.get("Include", "")
                 if name == "DubUrl" or name.startswith("DubUrl."):
-                    self.assertIn(ref.attrib["Version"], ("[$(DubUrlVersion)]", "[$(SchemaPackageVersion)]"), str(project))
+                    versions = (("[$(DubUrlProviderTestingVersion)]",) if name == "DubUrl.ProviderTesting"
+                                else ("[$(DubUrlVersion)]", "[$(SchemaPackageVersion)]"))
+                    self.assertIn(ref.attrib["Version"], versions, str(project))
 
     def test_job_dependencies_exist(self):
         jobs = self.workflow()["jobs"]

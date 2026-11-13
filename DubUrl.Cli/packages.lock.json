@@ -16,22 +16,22 @@
       },
       "DubUrl.Authentication.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oxJ3OSnYCVU2ZRRSIV9ZNzVBwJ2w0t5KFaNf/jWvIC1tqIkbEnTh/WgAFes4IgAOqEMugU6LqOQssy/4fgFzBA==",
+        "requested": "[0.66.0, 0.66.0]",
+        "resolved": "0.66.0",
+        "contentHash": "HyUA6aXJ+2xLscXd7iB+FKvNCL45PmTDnFoRWGZcS5roRp+/3nCc8OXPl0T6CCPtZBB09O6nb0/hHMJk+OS6gA==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.60.0",
           "Snowflake.Data": "6.3.0",
           "System.Security.Cryptography.Pkcs": "9.0.21"
         }
       },
       "DubUrl.Authentication.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "RypbeqT0Dd+xDaXbNkmIpN2akR6YX0IpfAGBnqvlXUXd8d0T5iUNtPcRD5TnrCN3eM7JslMSyoIjFg4qF9HUlA==",
+        "requested": "[0.66.0, 0.66.0]",
+        "resolved": "0.66.0",
+        "contentHash": "cIDYdtCQkQdBo13xWjiZ0mIARApgUSR4dU5VR0Sz+LCkF78JyIeS6KC/zpXgNu2QKd3Rz6r9/5zo0oAXXOMjtQ==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.60.0",
           "Microsoft.Data.SqlClient": "7.1.1",
           "Microsoft.Identity.Client": "4.83.3",
           "System.Security.Cryptography.Pkcs": "9.0.21"
@@ -93,8 +93,8 @@
       "System.CommandLine": {
         "type": "Direct",
         "requested": "[2.*, )",
-        "resolved": "2.0.14",
-        "contentHash": "15fyVO4aG6poR6IKmhM74zf7PUzaU6FZAGm2d3SQSO9yIyGAeo44e6t9qeKjjaqyMEqYdqcb2G1B0gpLoDU2cA=="
+        "resolved": "2.0.15",
+        "contentHash": "zsnY7Ex2dPmbS/Nrg5RUKJFCEMbHeP9TdzmTJrsNh59mgr8ulba1SHmE1SVgmVqivvr79kV1GAlInC44F4ggEg=="
       },
       "Apache.Arrow": {
         "type": "Transitive",
@@ -189,27 +189,27 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.56.0",
-        "contentHash": "QntaE5F0a6+n/2Rl3EdmBSjau4Krn7nhJcSWZZn17rzfONGqyS6Zsb9WLwoUfMSHx3iO0LRU9lB9TgsK7RnH9A==",
+        "resolved": "0.66.0",
+        "contentHash": "uWZmUNRt5Pmyab/PAJOTnRCPGDJyJ6mmEARrzLI9e5vx6JmQdPRSGVa+d1r9Nsnn4ov9xobebYCtZArFHEdtMw==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
       },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.55.1",
-        "contentHash": "8lAeMpD5OzCUFBvsoWMnl39ZTYi3z7pW8dsxGmHZE1jF7XI/m883zjE52em86S+pf3VOuszlbADPqCc0UZAN1w==",
+        "resolved": "0.106.0",
+        "contentHash": "tYePXiM9NabslRT/4i/GHG72L0dtbQcs7YEXJK2B4FF+zJl9T0w1tcYgDxw5kipdubQNuwEKevseOXoR0rh9jQ==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.55.1"
+          "DubUrl": "0.66.0"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.55.1",
-        "contentHash": "utFlGbR0n2cGy/kzpj8qFLNx5Q9+NUOHYNWjYTfjqM6t+BitmJgmVMv3kSpf3Utv3zJJ26cTSur7LWRvRQDFGQ==",
+        "resolved": "0.106.0",
+        "contentHash": "AW101cYn8NZoIA8CN6nJ5cmVT/TU5qrgmGKfsFG4wWhjYtZWBPsGcszMXgbDzMTsTfMjnQ8H/eFloTFzjhZz8Q==",
         "dependencies": {
-          "DubUrl.Schema": "0.55.1",
+          "DubUrl.Schema": "0.106.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -796,9 +796,9 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.56.0, 0.56.0]",
-          "DubUrl.Schema": "[0.55.1, 0.55.1]",
-          "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
+          "DubUrl": "[0.66.0, 0.66.0]",
+          "DubUrl.Schema": "[0.106.0, 0.106.0]",
+          "DubUrl.Schema.Documents": "[0.106.0, 0.106.0]"
         }
       }
     },
@@ -1213,22 +1213,22 @@
       },
       "DubUrl.Authentication.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oxJ3OSnYCVU2ZRRSIV9ZNzVBwJ2w0t5KFaNf/jWvIC1tqIkbEnTh/WgAFes4IgAOqEMugU6LqOQssy/4fgFzBA==",
+        "requested": "[0.66.0, 0.66.0]",
+        "resolved": "0.66.0",
+        "contentHash": "HyUA6aXJ+2xLscXd7iB+FKvNCL45PmTDnFoRWGZcS5roRp+/3nCc8OXPl0T6CCPtZBB09O6nb0/hHMJk+OS6gA==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.60.0",
           "Snowflake.Data": "6.3.0",
           "System.Security.Cryptography.Pkcs": "9.0.21"
         }
       },
       "DubUrl.Authentication.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "RypbeqT0Dd+xDaXbNkmIpN2akR6YX0IpfAGBnqvlXUXd8d0T5iUNtPcRD5TnrCN3eM7JslMSyoIjFg4qF9HUlA==",
+        "requested": "[0.66.0, 0.66.0]",
+        "resolved": "0.66.0",
+        "contentHash": "cIDYdtCQkQdBo13xWjiZ0mIARApgUSR4dU5VR0Sz+LCkF78JyIeS6KC/zpXgNu2QKd3Rz6r9/5zo0oAXXOMjtQ==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.60.0",
           "Microsoft.Data.SqlClient": "7.1.1",
           "Microsoft.Identity.Client": "4.83.3",
           "System.Security.Cryptography.Pkcs": "9.0.21"
@@ -1292,8 +1292,8 @@
       "System.CommandLine": {
         "type": "Direct",
         "requested": "[2.*, )",
-        "resolved": "2.0.14",
-        "contentHash": "15fyVO4aG6poR6IKmhM74zf7PUzaU6FZAGm2d3SQSO9yIyGAeo44e6t9qeKjjaqyMEqYdqcb2G1B0gpLoDU2cA=="
+        "resolved": "2.0.15",
+        "contentHash": "zsnY7Ex2dPmbS/Nrg5RUKJFCEMbHeP9TdzmTJrsNh59mgr8ulba1SHmE1SVgmVqivvr79kV1GAlInC44F4ggEg=="
       },
       "Apache.Arrow": {
         "type": "Transitive",
@@ -1391,27 +1391,27 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.56.0",
-        "contentHash": "QntaE5F0a6+n/2Rl3EdmBSjau4Krn7nhJcSWZZn17rzfONGqyS6Zsb9WLwoUfMSHx3iO0LRU9lB9TgsK7RnH9A==",
+        "resolved": "0.66.0",
+        "contentHash": "uWZmUNRt5Pmyab/PAJOTnRCPGDJyJ6mmEARrzLI9e5vx6JmQdPRSGVa+d1r9Nsnn4ov9xobebYCtZArFHEdtMw==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
       },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.55.1",
-        "contentHash": "8lAeMpD5OzCUFBvsoWMnl39ZTYi3z7pW8dsxGmHZE1jF7XI/m883zjE52em86S+pf3VOuszlbADPqCc0UZAN1w==",
+        "resolved": "0.106.0",
+        "contentHash": "tYePXiM9NabslRT/4i/GHG72L0dtbQcs7YEXJK2B4FF+zJl9T0w1tcYgDxw5kipdubQNuwEKevseOXoR0rh9jQ==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.55.1"
+          "DubUrl": "0.66.0"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.55.1",
-        "contentHash": "utFlGbR0n2cGy/kzpj8qFLNx5Q9+NUOHYNWjYTfjqM6t+BitmJgmVMv3kSpf3Utv3zJJ26cTSur7LWRvRQDFGQ==",
+        "resolved": "0.106.0",
+        "contentHash": "AW101cYn8NZoIA8CN6nJ5cmVT/TU5qrgmGKfsFG4wWhjYtZWBPsGcszMXgbDzMTsTfMjnQ8H/eFloTFzjhZz8Q==",
         "dependencies": {
-          "DubUrl.Schema": "0.55.1",
+          "DubUrl.Schema": "0.106.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -2041,9 +2041,9 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.56.0, 0.56.0]",
-          "DubUrl.Schema": "[0.55.1, 0.55.1]",
-          "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
+          "DubUrl": "[0.66.0, 0.66.0]",
+          "DubUrl.Schema": "[0.106.0, 0.106.0]",
+          "DubUrl.Schema.Documents": "[0.106.0, 0.106.0]"
         }
       }
     },
@@ -2512,22 +2512,22 @@
       },
       "DubUrl.Authentication.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oxJ3OSnYCVU2ZRRSIV9ZNzVBwJ2w0t5KFaNf/jWvIC1tqIkbEnTh/WgAFes4IgAOqEMugU6LqOQssy/4fgFzBA==",
+        "requested": "[0.66.0, 0.66.0]",
+        "resolved": "0.66.0",
+        "contentHash": "HyUA6aXJ+2xLscXd7iB+FKvNCL45PmTDnFoRWGZcS5roRp+/3nCc8OXPl0T6CCPtZBB09O6nb0/hHMJk+OS6gA==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.60.0",
           "Snowflake.Data": "6.3.0",
           "System.Security.Cryptography.Pkcs": "9.0.21"
         }
       },
       "DubUrl.Authentication.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "RypbeqT0Dd+xDaXbNkmIpN2akR6YX0IpfAGBnqvlXUXd8d0T5iUNtPcRD5TnrCN3eM7JslMSyoIjFg4qF9HUlA==",
+        "requested": "[0.66.0, 0.66.0]",
+        "resolved": "0.66.0",
+        "contentHash": "cIDYdtCQkQdBo13xWjiZ0mIARApgUSR4dU5VR0Sz+LCkF78JyIeS6KC/zpXgNu2QKd3Rz6r9/5zo0oAXXOMjtQ==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.60.0",
           "Microsoft.Data.SqlClient": "7.1.1",
           "Microsoft.Identity.Client": "4.83.3",
           "System.Security.Cryptography.Pkcs": "9.0.21"
@@ -2591,8 +2591,8 @@
       "System.CommandLine": {
         "type": "Direct",
         "requested": "[2.*, )",
-        "resolved": "2.0.14",
-        "contentHash": "15fyVO4aG6poR6IKmhM74zf7PUzaU6FZAGm2d3SQSO9yIyGAeo44e6t9qeKjjaqyMEqYdqcb2G1B0gpLoDU2cA=="
+        "resolved": "2.0.15",
+        "contentHash": "zsnY7Ex2dPmbS/Nrg5RUKJFCEMbHeP9TdzmTJrsNh59mgr8ulba1SHmE1SVgmVqivvr79kV1GAlInC44F4ggEg=="
       },
       "Apache.Arrow": {
         "type": "Transitive",
@@ -2690,27 +2690,27 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.56.0",
-        "contentHash": "QntaE5F0a6+n/2Rl3EdmBSjau4Krn7nhJcSWZZn17rzfONGqyS6Zsb9WLwoUfMSHx3iO0LRU9lB9TgsK7RnH9A==",
+        "resolved": "0.66.0",
+        "contentHash": "uWZmUNRt5Pmyab/PAJOTnRCPGDJyJ6mmEARrzLI9e5vx6JmQdPRSGVa+d1r9Nsnn4ov9xobebYCtZArFHEdtMw==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
       },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.55.1",
-        "contentHash": "8lAeMpD5OzCUFBvsoWMnl39ZTYi3z7pW8dsxGmHZE1jF7XI/m883zjE52em86S+pf3VOuszlbADPqCc0UZAN1w==",
+        "resolved": "0.106.0",
+        "contentHash": "tYePXiM9NabslRT/4i/GHG72L0dtbQcs7YEXJK2B4FF+zJl9T0w1tcYgDxw5kipdubQNuwEKevseOXoR0rh9jQ==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.55.1"
+          "DubUrl": "0.66.0"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.55.1",
-        "contentHash": "utFlGbR0n2cGy/kzpj8qFLNx5Q9+NUOHYNWjYTfjqM6t+BitmJgmVMv3kSpf3Utv3zJJ26cTSur7LWRvRQDFGQ==",
+        "resolved": "0.106.0",
+        "contentHash": "AW101cYn8NZoIA8CN6nJ5cmVT/TU5qrgmGKfsFG4wWhjYtZWBPsGcszMXgbDzMTsTfMjnQ8H/eFloTFzjhZz8Q==",
         "dependencies": {
-          "DubUrl.Schema": "0.55.1",
+          "DubUrl.Schema": "0.106.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -3328,9 +3328,9 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.56.0, 0.56.0]",
-          "DubUrl.Schema": "[0.55.1, 0.55.1]",
-          "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
+          "DubUrl": "[0.66.0, 0.66.0]",
+          "DubUrl.Schema": "[0.106.0, 0.106.0]",
+          "DubUrl.Schema.Documents": "[0.106.0, 0.106.0]"
         }
       }
     },

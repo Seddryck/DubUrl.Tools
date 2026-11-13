@@ -7,6 +7,7 @@ from pathlib import Path
 import pty
 import re
 import select
+import shutil
 import struct
 import subprocess
 import sys
@@ -18,8 +19,11 @@ ANSI = re.compile(rb"\x1b\[[0-?]*[ -/]*[@-~]")
 
 
 def run_wizard(tool_path, steps, expected_exit):
+    docker = shutil.which("docker")
+    if docker is None:
+        raise RuntimeError("Docker is required for the offline wizard smoke test.")
     command = [
-        "docker", "run", "--pull", "never", "--rm", "--network", "none", "-it",
+        docker, "run", "--pull", "never", "--rm", "--network", "none", "-it",
         "-e", "TERM=xterm", "-e", "NO_COLOR=1", "-e", "DUBURL_ProviderPacks__StorePath=/dev/null/store",
         "-v", f"{tool_path}:/tool:ro", "mcr.microsoft.com/dotnet/runtime:10.0",
         "/tool/duburl", "connection", "new",
@@ -27,7 +31,8 @@ def run_wizard(tool_path, steps, expected_exit):
     pid, fd = pty.fork()
     if pid == 0:
         fcntl.ioctl(sys.stdin.fileno(), termios.TIOCSWINSZ, struct.pack("HHHH", 32, 120, 0, 0))
-        os.execvp(command[0], command)
+        # Docker is a fixed executable. The tool path is passed as one argument to the PTY child.
+        os.execv(docker, command)  # nosec B606
 
     transcript = b""
     deadline = time.monotonic() + 45

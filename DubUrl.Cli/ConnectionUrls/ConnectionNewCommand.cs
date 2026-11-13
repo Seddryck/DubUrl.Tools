@@ -38,34 +38,7 @@ internal static class ConnectionNewCommand
         console.Out.WriteLine("Type to search menus. Use Up/Down and Enter to select.");
         console.Out.WriteLine();
 
-        var database = await SelectAsync("Database engine", catalog.Databases.OrderBy(item => item.Label, StringComparer.OrdinalIgnoreCase),
-            item => item.Label, terminal, cancellationToken);
-        var route = await SelectAsync("Driver", database.Routes, item => $"{item.Driver} ({item.Api})", terminal, cancellationToken);
-        if (route.Note is { } routeNote)
-            console.Out.WriteLine(routeNote);
-        var location = await SelectAsync("Endpoint", route.Locations,
-            id => catalog.Locations[id].Label ?? catalog.Locations[id].Transport, terminal, cancellationToken);
-
-        var methods = catalog.GetAuthentication(route, location);
-        // Location fields may be refined by the chosen authentication method.
-        // Keep endpoint prompts first when all choices agree on those fields.
-        var answers = new Dictionary<string, string>();
-        if (methods.Length > 0 && methods.All(method => !method.Fields.Keys.Intersect(catalog.Locations[location].Fields.Keys).Any()))
-        {
-            var endpointForm = catalog.CreateForm(route, location, methods[0]);
-            foreach (var id in endpointForm.ConnectionFields)
-                answers[id] = await PromptAsync(endpointForm, id, terminal, cancellationToken);
-        }
-
-        var auth = await SelectAsync("Authentication", methods, item => item.Label, terminal, cancellationToken);
-        var form = catalog.CreateForm(route, location, auth);
-        foreach (var id in form.ConnectionFields.Concat(form.AuthenticationFields).Distinct().Where(id => !answers.ContainsKey(id)))
-            answers[id] = await PromptAsync(form, id, terminal, cancellationToken);
-        var tls = await SelectAsync("TLS", catalog.GetTlsModes(route, auth), item => item.Label, terminal, cancellationToken);
-        foreach (var id in form.AdvancedFields.Where(id => !answers.ContainsKey(id)))
-            answers[id] = await PromptAsync(form, id, terminal, cancellationToken);
-
-        var url = await FinishAsync(form, tls, answers, terminal, cancellationToken);
+        var (url, auth) = await BuildUrlAsync(catalog, console.Out, terminal, cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
         console.Out.WriteLine();
         console.Out.WriteLine("Connection URL");
@@ -77,6 +50,44 @@ internal static class ConnectionNewCommand
             console.Out.WriteLine(hint);
         }
         return CliExitCodes.Success;
+    }
+
+    private static async Task<(string Url, AuthMethod Auth)> BuildUrlAsync(ConnectionUrlCatalog catalog, TextWriter output,
+        IAnsiConsole terminal, CancellationToken cancellationToken)
+    {
+        var database = await SelectAsync("Database engine", catalog.Databases.OrderBy(item => item.Label, StringComparer.OrdinalIgnoreCase),
+            item => item.Label, terminal, cancellationToken);
+        var route = await SelectAsync("Driver", database.Routes, item => $"{item.Driver} ({item.Api})", terminal, cancellationToken);
+        if (route.Note is { } routeNote)
+            output.WriteLine(routeNote);
+        var location = await SelectAsync("Endpoint", route.Locations,
+            id => catalog.Locations[id].Label ?? catalog.Locations[id].Transport, terminal, cancellationToken);
+
+        var methods = catalog.GetAuthentication(route, location);
+        // Location fields may be refined by the chosen authentication method.
+        // Keep endpoint prompts first when all choices agree on those fields.
+        var answers = new Dictionary<string, string>();
+        if (methods.Length > 0 && methods.All(method => !method.Fields.Keys.Intersect(catalog.Locations[location].Fields.Keys).Any()))
+        {
+            var endpointForm = catalog.CreateForm(route, location, methods[0]);
+            await PromptMissingFieldsAsync(endpointForm, endpointForm.ConnectionFields, answers, terminal, cancellationToken);
+        }
+
+        var auth = await SelectAsync("Authentication", methods, item => item.Label, terminal, cancellationToken);
+        var form = catalog.CreateForm(route, location, auth);
+        await PromptMissingFieldsAsync(form, form.ConnectionFields.Concat(form.AuthenticationFields), answers, terminal, cancellationToken);
+        var tls = await SelectAsync("TLS", catalog.GetTlsModes(route, auth), item => item.Label, terminal, cancellationToken);
+        await PromptMissingFieldsAsync(form, form.AdvancedFields, answers, terminal, cancellationToken);
+
+        return (await FinishAsync(form, tls, answers, terminal, cancellationToken), auth);
+    }
+
+    private static async Task PromptMissingFieldsAsync(ConnectionUrlForm form, IEnumerable<string> ids,
+        Dictionary<string, string> answers, IAnsiConsole terminal, CancellationToken cancellationToken)
+    {
+        foreach (var id in ids)
+            if (!answers.ContainsKey(id))
+                answers[id] = await PromptAsync(form, id, terminal, cancellationToken);
     }
 
     private static string RuntimeHint(AuthMethod auth)

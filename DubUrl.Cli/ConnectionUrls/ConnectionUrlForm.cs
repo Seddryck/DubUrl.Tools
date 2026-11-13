@@ -42,38 +42,48 @@ internal sealed class ConnectionUrlForm(Route route, string locationId, Location
         string Entered(string id) => fields.ContainsKey(id) ? answers.GetValueOrDefault(id, "").Trim() : "";
         string Value(string? id) => id is not null && fields.TryGetValue(id, out var field) ? ValueOrDefault(Entered(id), field) : "";
 
+        ValidateAnswers(Entered, Value);
+        var portField = FindRole("port");
+        var port = GetPortOverride(portField, Entered);
+        var path = location.Path.SelectMany(part => EncodePathPart(part, Value)).ToArray();
+        var scheme = ResolveScheme(tls, Value);
+        var authorityPort = portField is not null && fields[portField].QueryKey is null ? port : "";
+        var authority = EncodeAuthority(Value, authorityPort);
+        var options = EncodeOptions(tls, id => id == portField ? port : Value(id));
+        return scheme + "://" + authority + (path.Length > 0 ? "/" + string.Join('/', path) : "") + options;
+    }
+
+    private string EncodeAuthority(Func<string?, string> value, string port)
+    {
+        var hostField = FindRole("host");
+        var host = EncodeHost(hostField ?? "host", location.FixedHost ?? value(hostField));
+        var user = auth.FixedUser ?? value(FindRole("username"));
+        return (user.Length > 0 ? Escape(user) + "@" : "") + host + (port.Length > 0 ? ":" + port : "");
+    }
+
+    private void ValidateAnswers(Func<string, string> entered, Func<string?, string> value)
+    {
         foreach (var id in fields.Keys)
-            ValidateField(id, Entered(id));
+            ValidateField(id, entered(id));
         foreach (var (id, dependency) in location.Requires)
-            if (Value(id).Length > 0 && Value(dependency).Length == 0)
+            if (value(id).Length > 0 && value(dependency).Length == 0)
                 throw new ConnectionUrlInputException(dependency, $"{fields[id].Label} requires {fields[dependency].Label.ToLowerInvariant()}.");
         foreach (var pair in location.Exclusive)
         {
             var (left, right) = (pair[0], pair[1]);
-            if (Entered(left).Length > 0 && Entered(right).Length > 0)
+            if (entered(left).Length > 0 && entered(right).Length > 0)
                 throw new ConnectionUrlInputException(right, $"Choose either {fields[left].Label.ToLowerInvariant()} or {fields[right].Label.ToLowerInvariant()}.");
         }
+    }
 
-        var portField = FindRole("port");
-        var port = "";
-        if (portField is not null && Entered(portField).Length > 0)
-        {
-            var explicitPort = ParsePort(portField, Entered(portField)).ToString(CultureInfo.InvariantCulture);
-            var definition = fields[portField];
-            if (explicitPort != definition.DefaultText || definition.DefaultUnless.Any(id => Entered(id).Length > 0))
-                port = explicitPort;
-        }
-
-        var path = location.Path.SelectMany(part => EncodePathPart(part, Value)).ToArray();
-        var scheme = ResolveScheme(tls, Value);
-        var user = auth.FixedUser ?? Value(FindRole("username"));
-        var hostField = FindRole("host");
-        var host = EncodeHost(hostField ?? "host", location.FixedHost ?? Value(hostField));
-        var options = EncodeOptions(tls, id => id == portField ? port : Value(id));
-        return scheme + "://" + (user.Length > 0 ? Escape(user) + "@" : "") + host
-            + (port.Length > 0 && fields[portField!].QueryKey is null ? ":" + port : "")
-            + (path.Length > 0 ? "/" + string.Join('/', path) : "")
-            + options;
+    private string GetPortOverride(string? id, Func<string, string> entered)
+    {
+        if (id is null || entered(id) is not { Length: > 0 } input)
+            return "";
+        var port = ParsePort(id, input).ToString(CultureInfo.InvariantCulture);
+        var definition = fields[id];
+        return port == definition.DefaultText && !definition.DefaultUnless.Any(key => entered(key).Length > 0)
+            ? "" : port;
     }
 
     private string? FindRole(string role) => fields.FirstOrDefault(pair => pair.Value.Url == role).Key;
@@ -112,19 +122,11 @@ internal sealed class ConnectionUrlForm(Route route, string locationId, Location
 
     private static string? EncodeDomain(string value)
     {
-        var idn = new IdnMapping();
-        var parts = value.Split(['.', '\u3002', '\uff0e', '\uff61']);
+        string[] parts;
         try
         {
-            for (var i = 0; i < parts.Length; i++)
-            {
-                var label = parts[i];
-                if (label.Any(character => !char.IsAscii(character)))
-                    label = idn.GetAscii(label);
-                if (label.StartsWith("xn--", StringComparison.OrdinalIgnoreCase))
-                    idn.GetUnicode(label); // Validate a user-supplied Punycode label too.
-                parts[i] = label.ToLowerInvariant();
-            }
+            var idn = new IdnMapping();
+            parts = value.Split(['.', '\u3002', '\uff0e', '\uff61']).Select(label => EncodeDomainLabel(label, idn)).ToArray();
         }
         catch (ArgumentException)
         {
@@ -138,14 +140,24 @@ internal sealed class ConnectionUrlForm(Route route, string locationId, Location
         // Like the web builder's URL parser, a numeric final label makes this an IPv4 candidate.
         var addressParts = parts.Length > 1 && parts[^1].Length == 0 ? parts[..^1] : parts;
         var last = addressParts[^1];
-        if (last.Length == 0 || !(last.All(char.IsAsciiDigit)
-            || last.StartsWith("0x", StringComparison.Ordinal) && last.Skip(2).All(char.IsAsciiHexDigit)))
+        var isDecimal = last.Length > 0 && last.All(char.IsAsciiDigit);
+        var isHexadecimal = last.StartsWith("0x", StringComparison.Ordinal) && last.Skip(2).All(char.IsAsciiHexDigit);
+        if (!isDecimal && !isHexadecimal)
             return domain;
 
         var ipv4Text = string.Join('.', addressParts.Select(part => part == "0x" ? "0" : part));
         return IPAddress.TryParse(ipv4Text, out var address) && address.AddressFamily == AddressFamily.InterNetwork
             ? address.ToString()
             : null;
+    }
+
+    private static string EncodeDomainLabel(string label, IdnMapping idn)
+    {
+        if (label.Any(character => !char.IsAscii(character)))
+            label = idn.GetAscii(label);
+        if (label.StartsWith("xn--", StringComparison.OrdinalIgnoreCase))
+            idn.GetUnicode(label); // Validate a user-supplied Punycode label too.
+        return label.ToLowerInvariant();
     }
 
     private static string FormatIpv6(IPAddress address)
@@ -178,31 +190,38 @@ internal sealed class ConnectionUrlForm(Route route, string locationId, Location
 
     private string[] EncodePathPart(JsonNode part, Func<string?, string> value)
     {
-        if (part is JsonValue || Text(part, "field") is not null)
-        {
-            var id = PathField(part)!;
-            var segment = value(id);
-            if (segment.Length == 0 && part is JsonObject
-                && (part["fallbackWhen"] is not JsonArray when || when.Any(key => value(key!.GetValue<string>()).Length > 0)))
-                segment = Text(part, "fallback") ?? "";
-            if (segment is "." or "..")
-                throw new ConnectionUrlInputException(id, $"Enter a valid {fields[id].Label.ToLowerInvariant()}.");
-            return segment.Length == 0 ? [] : [Escape(segment)];
-        }
+        if (part is JsonValue fieldName)
+            return EncodeFieldSegment(fieldName.GetValue<string>(), value, null);
+        if (Text(part, "field") is { } field)
+            return EncodeFieldSegment(field, value, (JsonObject)part);
         if (Text(part, "literal") is { } literal)
-        {
-            var when = Text(part, "when");
-            var condition = value(when);
-            var expected = Text(part, "equalsIgnoreCase");
-            return (when is null || condition.Length > 0) && (expected is null || condition.Equals(expected, StringComparison.OrdinalIgnoreCase))
-                ? [Escape(literal)] : [];
-        }
+            return EncodeLiteralSegment(literal, part, value);
         if (Text(part, "file") is { } file)
             return FilePath(file, value(file), relativeOnly: false);
         if (Text(part, "relativeFile") is { } relativeFile)
             return FilePath(relativeFile, value(relativeFile), relativeOnly: true);
         var split = Text(part, "split")!;
         return EndpointPath(split, value(split), fields[split].DefaultText, Text(part, "reserveSuffix"));
+    }
+
+    private string[] EncodeFieldSegment(string id, Func<string?, string> value, JsonObject? definition)
+    {
+        var segment = value(id);
+        if (segment.Length == 0 && definition is not null
+            && (definition["fallbackWhen"] is not JsonArray when || when.Any(key => value(key!.GetValue<string>()).Length > 0)))
+            segment = Text(definition, "fallback") ?? "";
+        if (segment is "." or "..")
+            throw new ConnectionUrlInputException(id, $"Enter a valid {fields[id].Label.ToLowerInvariant()}.");
+        return segment.Length == 0 ? [] : [Escape(segment)];
+    }
+
+    private static string[] EncodeLiteralSegment(string literal, JsonNode part, Func<string?, string> value)
+    {
+        var when = Text(part, "when");
+        var condition = value(when);
+        var expected = Text(part, "equalsIgnoreCase");
+        return (when is null || condition.Length > 0) && (expected is null || condition.Equals(expected, StringComparison.OrdinalIgnoreCase))
+            ? [Escape(literal)] : [];
     }
 
     private static string[] SplitPath(string id, string value)

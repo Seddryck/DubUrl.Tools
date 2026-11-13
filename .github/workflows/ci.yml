@@ -304,6 +304,9 @@ jobs:
     - name: Include official connector catalog
       shell: pwsh
       run: Copy-Item .artifacts/connectors/connector-catalog.json DubUrl.Cli/connector-catalog.json
+    - name: Verify the bundled Providers connection URL catalog
+      shell: pwsh
+      run: ./build/Verify-ConnectionUrlCatalog.ps1
     - name: Pack and validate CLI packages
       shell: pwsh
       env:
@@ -405,6 +408,28 @@ jobs:
     env:
       DubUrlVersion: ${{ needs.version.outputs.duburl }}
       SchemaPackageVersion: ${{ needs.version.outputs.schema }}
+  test-offline-connection-wizard:
+    name: Installed CLI connection wizard offline
+    needs:
+    - version
+    - package-cli-nuget
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 10.0.403
+    - uses: actions/download-artifact@v7
+      with:
+        name: cli-nuget-${{ needs.version.outputs.semver }}
+        path: .artifacts/cli/packages
+    - name: Install CLI from the built packages
+      shell: bash
+      run: dotnet tool install --tool-path .artifacts/tool DubUrl-cli --version "$TOOL_VERSION" --source .artifacts/cli/packages
+      env:
+        TOOL_VERSION: ${{ needs.version.outputs.semver }}
+    - name: Run the wizard without a network
+      run: python3 build/test_offline_connection_wizard.py .artifacts/tool
   package-worker-nuget:
     name: Package Worker NuGet tool
     needs:
@@ -782,6 +807,7 @@ jobs:
     - package-application
     - package-cli-nuget
     - package-worker-nuget
+    - test-offline-connection-wizard
     - validate-release-assets
     runs-on: ubuntu-latest
     permissions:

@@ -25,8 +25,8 @@
 		<!-- Local project versions must satisfy the extracted Schema dependency baseline. -->
         <Version>1.2.0</Version>
         <DubUrlVersion Condition="'$(DubUrlVersion)' == ''">0.66.0</DubUrlVersion>
-        <DubUrlProviderTestingVersion Condition="'$(DubUrlProviderTestingVersion)' == ''">0.60.0</DubUrlProviderTestingVersion>
-        <SchemaPackageVersion Condition="'$(SchemaPackageVersion)' == ''">0.106.0</SchemaPackageVersion>
+        <DubUrlLibraryVersion Condition="'$(DubUrlLibraryVersion)' == ''">0.56.0</DubUrlLibraryVersion>
+        <SchemaPackageVersion Condition="'$(SchemaPackageVersion)' == ''">0.55.1</SchemaPackageVersion>
 		<ConnectorCatalogTag Condition="'$(ConnectorCatalogTag)' == ''">v0.55.0</ConnectorCatalogTag>
         <Authors>Cédric L. Charlier</Authors>
 		<Owners>Seddryck</Owners>

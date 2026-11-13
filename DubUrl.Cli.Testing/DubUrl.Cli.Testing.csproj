@@ -31,12 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DubUrl.Provider.FirebirdSql" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.Trino" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.Snowflake" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Provider.FirebirdSql" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.Trino" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.Snowflake" Version="[$(DubUrlLibraryVersion)]" />
   </ItemGroup>
 </Project>

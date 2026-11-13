@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlLibraryVersion)]" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
     <PackageReference Include="Npgsql" Version="10.0.3" />
     <PackageReference Include="MySqlConnector" Version="2.6.2" />

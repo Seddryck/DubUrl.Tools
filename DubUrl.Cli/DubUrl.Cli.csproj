@@ -27,8 +27,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DubUrl.Application\DubUrl.Application.csproj" />
-    <PackageReference Include="DubUrl.Authentication.SqlServer" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Authentication.Snowflake" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Authentication.SqlServer" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.Authentication.Snowflake" Version="[$(DubUrlLibraryVersion)]" />
   </ItemGroup>
 
   <ItemGroup>

@@ -189,8 +189,8 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.66.0",
-        "contentHash": "uWZmUNRt5Pmyab/PAJOTnRCPGDJyJ6mmEARrzLI9e5vx6JmQdPRSGVa+d1r9Nsnn4ov9xobebYCtZArFHEdtMw==",
+        "resolved": "0.67.0",
+        "contentHash": "J4k6eXLpjSkuqZb0PsJ9DUnmxxED9t8lpMBy0L7TAezzEGK0KiJMRMCHQ1tKjU0drp6/yAv2acjwD18S5wJ3Xg==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
@@ -796,7 +796,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.66.0, 0.66.0]",
+          "DubUrl": "[0.67.0, 0.67.0]",
           "DubUrl.Schema": "[0.55.1, 0.55.1]",
           "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
         }
@@ -1391,8 +1391,8 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.66.0",
-        "contentHash": "uWZmUNRt5Pmyab/PAJOTnRCPGDJyJ6mmEARrzLI9e5vx6JmQdPRSGVa+d1r9Nsnn4ov9xobebYCtZArFHEdtMw==",
+        "resolved": "0.67.0",
+        "contentHash": "J4k6eXLpjSkuqZb0PsJ9DUnmxxED9t8lpMBy0L7TAezzEGK0KiJMRMCHQ1tKjU0drp6/yAv2acjwD18S5wJ3Xg==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
@@ -2041,7 +2041,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.66.0, 0.66.0]",
+          "DubUrl": "[0.67.0, 0.67.0]",
           "DubUrl.Schema": "[0.55.1, 0.55.1]",
           "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
         }
@@ -2690,8 +2690,8 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.66.0",
-        "contentHash": "uWZmUNRt5Pmyab/PAJOTnRCPGDJyJ6mmEARrzLI9e5vx6JmQdPRSGVa+d1r9Nsnn4ov9xobebYCtZArFHEdtMw==",
+        "resolved": "0.67.0",
+        "contentHash": "J4k6eXLpjSkuqZb0PsJ9DUnmxxED9t8lpMBy0L7TAezzEGK0KiJMRMCHQ1tKjU0drp6/yAv2acjwD18S5wJ3Xg==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
@@ -3328,7 +3328,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.66.0, 0.66.0]",
+          "DubUrl": "[0.67.0, 0.67.0]",
           "DubUrl.Schema": "[0.55.1, 0.55.1]",
           "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
         }

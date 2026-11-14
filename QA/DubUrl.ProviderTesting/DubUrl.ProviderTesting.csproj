@@ -4,7 +4,7 @@
     <AssemblyName>DubUrl.Tools.ProviderTesting</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DubUrl.ProviderTesting" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.ProviderTesting" Version="[$(DubUrlLibraryVersion)]" />
     <PackageReference Include="CredOS" Version="0.1.0" />
     <ProjectReference Include="../../DubUrl.Cli/DubUrl.Cli.csproj" />
   </ItemGroup>

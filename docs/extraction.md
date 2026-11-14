@@ -6,7 +6,8 @@ Imported from Seddryck/DubUrl commit `63e5ff87` (the schema extraction is merged
 
 | Area | Repository |
 | --- | --- |
-| Core, providers, native adapters, authentication, provider QA and connector pack/catalog publication | DubUrl |
+| Core and its compatibility libraries | DubUrl |
+| Providers, native adapters, authentication, provider QA and connector pack/catalog publication | DubUrl.Providers |
 | Schema model, document formats, rendering, exported Schema documentation | DubUrl.Schema |
 | Application workflows, CLI, worker, application integration tests, tool distributions and catalog signing host | DubUrl.Tools |
 
@@ -14,12 +15,12 @@ Tools uses package references to the libraries; neither library repository depen
 
 Core/provider QA now inherits a library-only authentication hierarchy. CLI consumer contracts live in Tools' QA adapter and reuse the native contracts/fixtures from the pinned `DubUrl.ProviderTesting` package. A friend-assembly grant is restricted to `DubUrl.Tools.ProviderTesting`; no native fixture implementation is duplicated in Tools. `LiveCliTests` provisions a local SQLite fixture by default and can execute against an external provisioned fixture when `DUBURL_TOOLS_QA_URL` is set, with `DUBURL_TOOLS_QA_TABLE` optionally selecting the table. Credentials belong in the test environment, never source or logs. Default CI runs the contract inventory, local SQLite contracts and CLI's isolated provider tests; remote database, OS credential-store, terminal and OAuth acceptance tests require their existing prerequisites.
 
-Provider packs and their official catalog remain Core release assets: their version describes the provider binaries, not the Tools host. Application builds its default metadata from pinned provider packages plus the connector matrix snapshot. Update that snapshot when adopting provider catalog changes. The CLI includes the pinned official v0.55.0 release catalog for installable packs, independently of the v0.56.0 library dependency. Signing orchestration is in `connectors/Signing`; trusted catalog contracts and provider-pack storage remain library APIs.
+New provider packs and their official installation catalog are released by DubUrl.Providers under `connectors-v<provider-version>` tags. Application builds its default metadata from pinned provider packages and the connector matrix snapshot. The CLI bundles the catalog selected by `ConnectorCatalogTag` in `Directory.Build.props`. The first Providers catalog, `connectors-v0.70.0`, requires DubUrl 0.67.0 or later within the same major version. When updating the catalog, use a DubUrl package in its API range. Signing orchestration is in `connectors/Signing`; trusted catalog contracts and provider-pack storage remain library APIs.
 
 ## Coordinated cutover
 
 1. Merge the companion Core cleanup first. It stops publishing Application, CLI and worker, preserves provider/catalog publication, and adds the missing authentication and reusable provider QA packages. Publish the complete library package set at the pinned `DubUrlVersion` (initially `0.56.0`).
-2. Verify every pinned package is available from NuGet.org and the pinned `ConnectorCatalogVersion` catalog is available from Core's GitHub Releases. Candidate validation may use a temporary local NuGet feed; that feed is not a release dependency and is never committed.
+2. Verify every pinned package is available from NuGet.org and `ConnectorCatalogTag` identifies a published installation catalog. Candidate validation may use a temporary local NuGet feed.
 3. Configure this repository's `release` environment and NuGet trusted-publishing policies for Application, both tool pointer packages, and their six RID package families. Reuse existing package ownership; do not rename package IDs or run both repositories' publishers for the same IDs. Enable the Codecov OIDC integration if coverage upload is required.
 4. Merge Tools only after the dependency packages and publishing configuration are ready. GitVersion seeds Tools at `1.2.0`, above the existing tool/Application `1.1.0` releases. Validate that baseline against NuGet immediately before cutover; advance it if another release has appeared.
 5. Confirm a clean restore, package-only smoke tests, and both distribution channels. Update links and consumers. Keep the old release assets available for existing download URLs.

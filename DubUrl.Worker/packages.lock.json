@@ -10,9 +10,9 @@
       },
       "DubUrl": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "QntaE5F0a6+n/2Rl3EdmBSjau4Krn7nhJcSWZZn17rzfONGqyS6Zsb9WLwoUfMSHx3iO0LRU9lB9TgsK7RnH9A==",
+        "requested": "[0.67.0, 0.67.0]",
+        "resolved": "0.67.0",
+        "contentHash": "J4k6eXLpjSkuqZb0PsJ9DUnmxxED9t8lpMBy0L7TAezzEGK0KiJMRMCHQ1tKjU0drp6/yAv2acjwD18S5wJ3Xg==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
@@ -755,7 +755,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.56.0, 0.56.0]",
+          "DubUrl": "[0.67.0, 0.67.0]",
           "DubUrl.Schema": "[0.55.1, 0.55.1]",
           "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
         }
@@ -1028,9 +1028,9 @@
       },
       "DubUrl": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "QntaE5F0a6+n/2Rl3EdmBSjau4Krn7nhJcSWZZn17rzfONGqyS6Zsb9WLwoUfMSHx3iO0LRU9lB9TgsK7RnH9A==",
+        "requested": "[0.67.0, 0.67.0]",
+        "resolved": "0.67.0",
+        "contentHash": "J4k6eXLpjSkuqZb0PsJ9DUnmxxED9t8lpMBy0L7TAezzEGK0KiJMRMCHQ1tKjU0drp6/yAv2acjwD18S5wJ3Xg==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
@@ -1814,7 +1814,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.56.0, 0.56.0]",
+          "DubUrl": "[0.67.0, 0.67.0]",
           "DubUrl.Schema": "[0.55.1, 0.55.1]",
           "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
         }
@@ -2141,9 +2141,9 @@
       },
       "DubUrl": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "QntaE5F0a6+n/2Rl3EdmBSjau4Krn7nhJcSWZZn17rzfONGqyS6Zsb9WLwoUfMSHx3iO0LRU9lB9TgsK7RnH9A==",
+        "requested": "[0.67.0, 0.67.0]",
+        "resolved": "0.67.0",
+        "contentHash": "J4k6eXLpjSkuqZb0PsJ9DUnmxxED9t8lpMBy0L7TAezzEGK0KiJMRMCHQ1tKjU0drp6/yAv2acjwD18S5wJ3Xg==",
         "dependencies": {
           "Didot.Core": "0.34.0"
         }
@@ -2906,7 +2906,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.56.0, 0.56.0]",
+          "DubUrl": "[0.67.0, 0.67.0]",
           "DubUrl.Schema": "[0.55.1, 0.55.1]",
           "DubUrl.Schema.Documents": "[0.55.1, 0.55.1]"
         }

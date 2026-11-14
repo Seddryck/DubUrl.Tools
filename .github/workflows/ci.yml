@@ -265,13 +265,28 @@ jobs:
     - name: Download pinned official provider catalog
       run: |
         [xml]$props = Get-Content Directory.Build.props -Raw
-        $catalogVersion = ($props.Project.PropertyGroup.ConnectorCatalogVersion | Where-Object { $_ }).InnerText
-        if ($catalogVersion -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid pinned catalog version.' }
+        $tag = ($props.Project.PropertyGroup.ConnectorCatalogTag | Where-Object { $_ }).InnerText
+        if ($tag -notmatch '^(?<source>connectors-v|v)(?<version>\d+\.\d+\.\d+)$') { throw 'Invalid pinned connector catalog tag.' }
+        $catalogVersion = $Matches.version
+        $fromProviders = $Matches.source -eq 'connectors-v'
+        $repository = if ($fromProviders) { 'DubUrl.Providers' } else { 'DubUrl' }
         New-Item -ItemType Directory -Force .artifacts/connectors | Out-Null
-        Invoke-WebRequest "https://github.com/Seddryck/DubUrl/releases/download/v$catalogVersion/connector-catalog.json" -OutFile .artifacts/connectors/connector-catalog.json
+        $releaseUrl = "https://github.com/Seddryck/$repository/releases/download/$tag"
+        Invoke-WebRequest "$releaseUrl/connector-catalog.json" -OutFile .artifacts/connectors/connector-catalog.json
         $catalog = Get-Content .artifacts/connectors/connector-catalog.json -Raw | ConvertFrom-Json
         if ($catalog.schemaVersion -ne 2 -or $catalog.entries.Count -eq 0) { throw 'Invalid official connector catalog.' }
         if (@($catalog.entries | Where-Object version -ne $catalogVersion).Count) { throw 'Unexpected provider version in official catalog.' }
+        if ($fromProviders) {
+          $core = [version]($env:DubUrlVersion.Split('-')[0])
+          foreach ($entry in $catalog.entries) {
+            $archive = "duburl-connector-$($entry.provider)-$catalogVersion.zip"
+            if ($entry.downloadUri -cne "$releaseUrl/$archive") { throw "Unexpected download URL for '$($entry.provider)'." }
+            if ($entry.dubUrlApiRange -notmatch '^\[(?<min>\d+\.\d+\.\d+),(?<max>\d+\.\d+\.\d+)\)$' -or
+                $core -lt [version]$Matches.min -or $core -ge [version]$Matches.max) {
+              throw "DubUrl $core is outside the API range for '$($entry.provider)': $($entry.dubUrlApiRange)."
+            }
+          }
+        }
     - uses: actions/upload-artifact@v7
       with:
         name: official-connector-catalog

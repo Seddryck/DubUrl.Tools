@@ -6,22 +6,22 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DubUrl" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.Provider.Access" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Db2" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Drill" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.DuckDb" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Excel" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.FirebirdSql" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Odbc" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Oracle" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Snowflake" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Teradata" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Text" Version="[$(DubUrlVersion)]" />
-<PackageReference Include="DubUrl.Provider.Trino" Version="[$(DubUrlVersion)]" />
-    <PackageReference Include="DubUrl.OleDb" Version="[$(DubUrlVersion)]" />
+    <PackageReference Include="DubUrl.Provider.Access" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Db2" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Drill" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.DuckDb" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Excel" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.FirebirdSql" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.MySql" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Odbc" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Oracle" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.PostgreSql" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Snowflake" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Sqlite" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.SqlServer" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Teradata" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Text" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.Provider.Trino" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.OleDb" Version="[$(DubUrlLibraryVersion)]" />
   </ItemGroup>
 </Project>

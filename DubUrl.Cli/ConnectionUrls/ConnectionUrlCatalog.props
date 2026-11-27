@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <ConnectionUrlCatalogVersion>0.69.0</ConnectionUrlCatalogVersion>
-    <ConnectionUrlCatalogSha256>38008cda998c5333b41ee68b1984e092de8f5e2698768d739b284ea96254e375</ConnectionUrlCatalogSha256>
+    <ConnectionUrlCatalogVersion>0.73.1</ConnectionUrlCatalogVersion>
+    <ConnectionUrlCatalogSha256>54ca466c1d0af3a25b9a6daef076357a773a60ad57c3686b98b1f22c0bb66cea</ConnectionUrlCatalogSha256>
   </PropertyGroup>
 </Project>

@@ -32,7 +32,7 @@
 
 <ItemGroup>
 <PackageReference Include="DubUrl.Provider.DuckDb.Native" Version="[$(DubUrlLibraryVersion)]" />
-<PackageReference Include="DubUrl.OleDb" Version="[$(DubUrlLibraryVersion)]" />
+<PackageReference Include="DubUrl.OleDb" Version="[$(DubUrlVersion)]" />
 <PackageReference Include="DubUrl.Provider.Access" Version="[$(DubUrlLibraryVersion)]" />
 <PackageReference Include="DubUrl.Provider.Db2" Version="[$(DubUrlLibraryVersion)]" />
 <PackageReference Include="DubUrl.Provider.Drill" Version="[$(DubUrlLibraryVersion)]" />

@@ -27,8 +27,10 @@ class Boundaries(unittest.TestCase):
             for ref in ET.parse(project).iter("PackageReference"):
                 name = ref.attrib.get("Include", "")
                 if name == "DubUrl" or name.startswith("DubUrl."):
-                    if name == "DubUrl":
+                    if name in {"DubUrl", "DubUrl.OleDb"}:
                         version = "[$(DubUrlVersion)]"
+                    elif name == "DubUrl.ProviderTesting":
+                        version = "[$(DubUrlProviderTestingVersion)]"
                     elif name.startswith("DubUrl.Schema"):
                         version = "[$(SchemaPackageVersion)]"
                     else:

@@ -16,22 +16,22 @@
       },
       "DubUrl.Authentication.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oxJ3OSnYCVU2ZRRSIV9ZNzVBwJ2w0t5KFaNf/jWvIC1tqIkbEnTh/WgAFes4IgAOqEMugU6LqOQssy/4fgFzBA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "2O54vga1QfPZyvA/at6/tU1G5ztl0uj8SWDbedJIQ3xTeOtz6pz9NyCk0e+S3TR4r5hxMi/M2CA3/PGJP7GKig==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.70.2",
           "Snowflake.Data": "6.3.0",
           "System.Security.Cryptography.Pkcs": "9.0.21"
         }
       },
       "DubUrl.Authentication.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "RypbeqT0Dd+xDaXbNkmIpN2akR6YX0IpfAGBnqvlXUXd8d0T5iUNtPcRD5TnrCN3eM7JslMSyoIjFg4qF9HUlA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "uwltOGyei/mH25+UtJhxyxkjO/Qw9JLdG/4t5bfdUPlii4hFRwT9pJR3XJd5Rr3ZPy+tBwlRp7/xbnemyVngfg==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.70.2",
           "Microsoft.Data.SqlClient": "7.1.1",
           "Microsoft.Identity.Client": "4.83.3",
           "System.Security.Cryptography.Pkcs": "9.0.21"
@@ -206,19 +206,19 @@
       },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "5t1lgWne2SGhv0EKaLmXu8g9qnv4RfI2VDklYrOXhrhj7+RYr3AhWsz1PZHd+XKD/lRUvIVnvb8Y5QEP6fAP7Q==",
+        "resolved": "0.111.0",
+        "contentHash": "22qr7/pgEKcFDcT48Hpm1oL1GBvsi0OHk0UfTz26AyGPvDLuOQ5Cy81zjX9Seeh7vquZo2dbh5Y5kOLbQHv6lw==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.67.0"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "Er/ojW5j+fsZZ++H5BCXeBt8G7c+hJvcBkGSXPt195LQd3t32y/DCZbgMYn+qDfWkJVawTpCZw6wHmMZ9HMBTw==",
+        "resolved": "0.111.0",
+        "contentHash": "iJn06tm9+v2jdtkxasuFcfhmvrSjxwfDwrYHNx1ib9qnMonPZTz+mLujBpdnv32LqEFpbZnVJ9yS7an8vBW56A==",
         "dependencies": {
-          "DubUrl.Schema": "0.109.0",
+          "DubUrl.Schema": "0.111.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -819,8 +819,8 @@
         "type": "Project",
         "dependencies": {
           "DubUrl": "[0.70.2, 0.70.2]",
-          "DubUrl.Schema": "[0.109.0, 0.109.0]",
-          "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
+          "DubUrl.Schema": "[0.111.0, 0.111.0]",
+          "DubUrl.Schema.Documents": "[0.111.0, 0.111.0]"
         }
       }
     },
@@ -1235,22 +1235,22 @@
       },
       "DubUrl.Authentication.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oxJ3OSnYCVU2ZRRSIV9ZNzVBwJ2w0t5KFaNf/jWvIC1tqIkbEnTh/WgAFes4IgAOqEMugU6LqOQssy/4fgFzBA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "2O54vga1QfPZyvA/at6/tU1G5ztl0uj8SWDbedJIQ3xTeOtz6pz9NyCk0e+S3TR4r5hxMi/M2CA3/PGJP7GKig==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.70.2",
           "Snowflake.Data": "6.3.0",
           "System.Security.Cryptography.Pkcs": "9.0.21"
         }
       },
       "DubUrl.Authentication.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "RypbeqT0Dd+xDaXbNkmIpN2akR6YX0IpfAGBnqvlXUXd8d0T5iUNtPcRD5TnrCN3eM7JslMSyoIjFg4qF9HUlA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "uwltOGyei/mH25+UtJhxyxkjO/Qw9JLdG/4t5bfdUPlii4hFRwT9pJR3XJd5Rr3ZPy+tBwlRp7/xbnemyVngfg==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.70.2",
           "Microsoft.Data.SqlClient": "7.1.1",
           "Microsoft.Identity.Client": "4.83.3",
           "System.Security.Cryptography.Pkcs": "9.0.21"
@@ -1430,19 +1430,19 @@
       },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "5t1lgWne2SGhv0EKaLmXu8g9qnv4RfI2VDklYrOXhrhj7+RYr3AhWsz1PZHd+XKD/lRUvIVnvb8Y5QEP6fAP7Q==",
+        "resolved": "0.111.0",
+        "contentHash": "22qr7/pgEKcFDcT48Hpm1oL1GBvsi0OHk0UfTz26AyGPvDLuOQ5Cy81zjX9Seeh7vquZo2dbh5Y5kOLbQHv6lw==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.67.0"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "Er/ojW5j+fsZZ++H5BCXeBt8G7c+hJvcBkGSXPt195LQd3t32y/DCZbgMYn+qDfWkJVawTpCZw6wHmMZ9HMBTw==",
+        "resolved": "0.111.0",
+        "contentHash": "iJn06tm9+v2jdtkxasuFcfhmvrSjxwfDwrYHNx1ib9qnMonPZTz+mLujBpdnv32LqEFpbZnVJ9yS7an8vBW56A==",
         "dependencies": {
-          "DubUrl.Schema": "0.109.0",
+          "DubUrl.Schema": "0.111.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -2086,8 +2086,8 @@
         "type": "Project",
         "dependencies": {
           "DubUrl": "[0.70.2, 0.70.2]",
-          "DubUrl.Schema": "[0.109.0, 0.109.0]",
-          "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
+          "DubUrl.Schema": "[0.111.0, 0.111.0]",
+          "DubUrl.Schema.Documents": "[0.111.0, 0.111.0]"
         }
       }
     },
@@ -2556,22 +2556,22 @@
       },
       "DubUrl.Authentication.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oxJ3OSnYCVU2ZRRSIV9ZNzVBwJ2w0t5KFaNf/jWvIC1tqIkbEnTh/WgAFes4IgAOqEMugU6LqOQssy/4fgFzBA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "2O54vga1QfPZyvA/at6/tU1G5ztl0uj8SWDbedJIQ3xTeOtz6pz9NyCk0e+S3TR4r5hxMi/M2CA3/PGJP7GKig==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.70.2",
           "Snowflake.Data": "6.3.0",
           "System.Security.Cryptography.Pkcs": "9.0.21"
         }
       },
       "DubUrl.Authentication.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "RypbeqT0Dd+xDaXbNkmIpN2akR6YX0IpfAGBnqvlXUXd8d0T5iUNtPcRD5TnrCN3eM7JslMSyoIjFg4qF9HUlA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "uwltOGyei/mH25+UtJhxyxkjO/Qw9JLdG/4t5bfdUPlii4hFRwT9pJR3XJd5Rr3ZPy+tBwlRp7/xbnemyVngfg==",
         "dependencies": {
-          "DubUrl": "0.56.0",
+          "DubUrl": "0.70.2",
           "Microsoft.Data.SqlClient": "7.1.1",
           "Microsoft.Identity.Client": "4.83.3",
           "System.Security.Cryptography.Pkcs": "9.0.21"
@@ -2751,19 +2751,19 @@
       },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "5t1lgWne2SGhv0EKaLmXu8g9qnv4RfI2VDklYrOXhrhj7+RYr3AhWsz1PZHd+XKD/lRUvIVnvb8Y5QEP6fAP7Q==",
+        "resolved": "0.111.0",
+        "contentHash": "22qr7/pgEKcFDcT48Hpm1oL1GBvsi0OHk0UfTz26AyGPvDLuOQ5Cy81zjX9Seeh7vquZo2dbh5Y5kOLbQHv6lw==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.67.0"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "Er/ojW5j+fsZZ++H5BCXeBt8G7c+hJvcBkGSXPt195LQd3t32y/DCZbgMYn+qDfWkJVawTpCZw6wHmMZ9HMBTw==",
+        "resolved": "0.111.0",
+        "contentHash": "iJn06tm9+v2jdtkxasuFcfhmvrSjxwfDwrYHNx1ib9qnMonPZTz+mLujBpdnv32LqEFpbZnVJ9yS7an8vBW56A==",
         "dependencies": {
-          "DubUrl.Schema": "0.109.0",
+          "DubUrl.Schema": "0.111.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -3395,8 +3395,8 @@
         "type": "Project",
         "dependencies": {
           "DubUrl": "[0.70.2, 0.70.2]",
-          "DubUrl.Schema": "[0.109.0, 0.109.0]",
-          "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
+          "DubUrl.Schema": "[0.111.0, 0.111.0]",
+          "DubUrl.Schema.Documents": "[0.111.0, 0.111.0]"
         }
       }
     },

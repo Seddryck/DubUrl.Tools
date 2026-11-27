@@ -22,6 +22,6 @@
 <PackageReference Include="DubUrl.Provider.Teradata" Version="[$(DubUrlLibraryVersion)]" />
 <PackageReference Include="DubUrl.Provider.Text" Version="[$(DubUrlLibraryVersion)]" />
 <PackageReference Include="DubUrl.Provider.Trino" Version="[$(DubUrlLibraryVersion)]" />
-    <PackageReference Include="DubUrl.OleDb" Version="[$(DubUrlLibraryVersion)]" />
+    <PackageReference Include="DubUrl.OleDb" Version="[$(DubUrlVersion)]" />
   </ItemGroup>
 </Project>

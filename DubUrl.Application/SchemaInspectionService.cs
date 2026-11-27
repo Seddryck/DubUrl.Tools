@@ -1,5 +1,6 @@
 using System.Data.Common;
 using DubUrl.Discovery;
+using DubUrl.Parsing;
 using DubUrl.Schema;
 using DubUrl.Schema.Documents;
 using DubUrl.Schema.Documents.V1;
@@ -27,7 +28,31 @@ public sealed class SchemaInspectionService : ISchemaInspectionService
         => (this.inspector, this.exporter) = (inspector, exporter);
 
     public async Task<SchemaExportResult> InspectAsync(ConnectionUrl connection, DiscoveryOptions? options = null, CancellationToken cancellationToken = default)
-        => Export(await inspector.InspectAsync(connection, options, cancellationToken).ConfigureAwait(false));
+    {
+        ArgumentNullException.ThrowIfNull(connection);
+        cancellationToken.ThrowIfCancellationRequested();
+        return Export(await inspector.InspectAsync(connection, NormalizeSqliteFilters(connection, options), cancellationToken).ConfigureAwait(false));
+    }
+
+    private static DiscoveryOptions? NormalizeSqliteFilters(ConnectionUrl connection, DiscoveryOptions? options)
+    {
+        if (options is null || (options.Tables.Count == 0 && options.Schemas.Count == 0)
+            || !ConnectionUri.TryParse(connection.Url, out var uri)
+            || uri?.Scheme.Parts.Any(part => part.Equals("sqlite", StringComparison.OrdinalIgnoreCase)
+                || part.Equals("sq", StringComparison.OrdinalIgnoreCase)) != true)
+            return options;
+
+        // SQLite represents main and attached databases as database qualifiers.
+        var useLegacySchemas = options.Databases.Count == 0;
+        return options with
+        {
+            Databases = useLegacySchemas ? options.Schemas : options.Databases,
+            Schemas = useLegacySchemas ? [] : options.Schemas,
+            Tables = options.Tables.Select(table => table is { Schema: not null, Database: null, Catalog: null }
+                ? table with { Database = table.Schema, Schema = null }
+                : table).ToArray()
+        };
+    }
 
     public async Task<SchemaExportResult> InspectAsync(DbConnection borrowed, ISchemaMetadataReader reader,
         DiscoveryOptions? options = null, CancellationToken cancellationToken = default)

@@ -20,155 +20,168 @@
       },
       "DubUrl.Provider.Access": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "CSapVvIowe90JDFRLGmjaqYUFLUdOGBlnUiw6d8qJ6vqWQxAogmLUm72GcaVwCj2y5qvk4Luln5oouiPRpCG6w==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "aTya398+pVlHlfmzmdXnPvD44L36hH46vQOsJA2bTZ7sad9/ow55nL9vB+t4oVbkRE3zbodroW+eRW2QRveQDw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Db2": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "Gcjeb42ZUWPQnB4X/H8N/rp5Ls8aflNtu4eys91Anah6wmZagusBQCJ/ZA2dYOwVeGnOLOHR7mWAHm7aTZHvUw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "z+k31tXaV31va+NDubh60QIBE5VLeRIALco/lFbXBKdIw/a/dCjQqlZTzbXRvZvvCB93dtu7GBhgYstYlFdVLA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Drill": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "lmxTwZZfttDzOJ5MV12pZ3BYRqMo5PlPnGCRiv9n2WsqYmLKfoGxn+viYGiXqorvd/WGfUXIENSH0uaJq2+xfw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "tZc1K4w2Iog64b1bEioepqrqhgi9+OxzbbxLB2a+qgGP32zfOJEAUY1TdZe8ZKbMvzTBItx/Zzo4BPLFmVqFcw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.DuckDb": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "DtNuR2WGH+u9tt3PviHS1rhFaZ7e53LRA9RlSOZ6sOT4cjOV64RLTAO2/iY+lWXh0CI47NpVjH7xJZrxE/3asQ==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "V35dYgqUEqOPNF3zCcoXOZbxRPn1czzdBJbkicwHw1zVHzaeeMQ7hU7O9NWfBWYZxGk06WjekvpzbrMENKouVw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Excel": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "I8zp3gT74miSKuCY3kqHX/CfNzYML2XGm1GN6rcoaE3Sjv64a3fLxhSeTslqmCHinQGgp5I/0gPsj4Gq+vHYVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "8EbKd4Tfc/Vaw8gJh3dBHHHwmqJvPhhmveYTCEaz3bEct0Lm3UJxIbTQ6El5eqVolNPp0dSMofEcmqT6r6jXhw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.FirebirdSql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "4FoR6lUoVeX+DJHo2Wn4EQoBmUkJSDVOBwB4LB2Ec0hDxCBtP0rSizR5W5dcg63h4Huihby85ji6se8oPtr1oQ==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "BndvpDWb3Tr3oTUESozL+3go5kOHnGxxpHwFefahwlIEU0zZbuOPIlAI9d7JDbyjJdpVGRbjudGPhX910E3Hxw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.MySql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "XoIJOnUPcE5kl4zfwYsbVFIqVm/fIwPvlllC0TtSwwX5J2em0sEMoe2u4CwJkuKXaYOQ4SROoCnraiWDn2LF2g==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "6aAi4/J2tcYmV86rZfBfuuKflqe5Y+ctBk/FcFUp65xWg9WJ9fkzRqArYcGtvA8c0+RMEjyv8ktdT+bNxDP5dQ==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Odbc": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oDUxGENdP5l9Ae/K5Fnd20gnNhI7fWHPRMhVd0EFNIGA4WuyptPhiBMUx9G0v7XLzc6xfaCuZ4/D87rCUpYqLA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "PsJ9YsW15FBfMQyh8X4Jv/ZWf6UgvoJZ2D8Iq0gJj1LpWyajQgZFV8ZKO3ZDLLOyI8NswoXg0ItqGBiaEcfJJw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Access": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Drill": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.DuckDb": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Excel": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.MySql": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.PostgreSql": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.SqlServer": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Text": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Trino": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Provider.Access": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Drill": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.DuckDb": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Excel": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Hive": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.MySql": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.PostgreSql": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Spark": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.SqlServer": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Text": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Trino": "[0.73.1, 1.0.0)"
         }
       },
       "DubUrl.Provider.Oracle": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "tUV5KP4XsUDT7Nugn8jjLxg3cIzyDhbjkV9TXQgf3Ie5paGHaP8mpGBFBkql1RKHgvFYjk5j/lnMfwEDywvVVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "vvVSalnCdQJY4Z7FPJH6ceNOuaJps5DlLi07f1htxxblRZzGoLdrCyhDh542JMcLyHJgUCGz3Rj+1QB9UHe7AA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.PostgreSql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oZo3tfgXAHgKJ737BmBoKlhRVRrgbueDYdLmcjKlfFFAISzNoD921uSc0sb5UySd5CMSxr6zZAEs2L0xwY9jjA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "m+v9xj3UCU734afeSqcP0IK9pMgqhpti16kF/DiXQLd8X5tNWpPNSMwfRzFpiWqaUS9HVo8VUc0PMcZ/0b4z7w==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "KHCRQrvoNlGsrYxYOm8CefWj+duguq7BKlFLuTkFoYDL1mCh9obZuP5y+Cvy+sBdz+gFY/k87D8rMl4cjTxfmw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "jijMRz1ltIt1/eh3EzGpjgBFbdyH23CXygteOofwdzSxw5bwVz/XGsHmU+tBrmDDTtc6uII6rgdWaqYhoKNOkg==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Sqlite": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "zOWvXr46zghllW+fuOCbdixjoWNAivECf7cs+XdSlA9XkpGLZ0F1TXQIWZC/nD3ICZ1a+/HfaOe6sliowJRyVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "m7/zfF29s0HvWjORuU8/q+ozZOzDbs8mlMgn+lWZYVCX7iIQJsPFJ0GgzMhhVLe7tdREANYygykfRpyoh/ISnA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "TS1jfj4sHCzTXh2Ov/rfW2BsBFfx6fKuKjeq3o/kmc+qp9p0SA5EV2HmuYfcOU5jl2zOihZu+q3cmWHr1M463A==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "LfncKo8pTWV7MN/z7M844xu/w69Bpxsw/H072QeAqjg0H1KlswbOEpuEZsOdIGKZ1ZqsfDDfZPgeh5MXp1fX7A==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Teradata": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "6yya2J0ajphigBXMD6A56ouG6j6/XkH8ZBwxnF8KOJG6hS5JLVyzGhLeAxuS51VkjcYDrszvkU3DlsXdRcor4g==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "+0OM6ItKOz5/M5mVu5c/jNTf4R1rptROSbDLbygOKw4+cr4fMEaHyXJL3lRNl/nPef9prTunhZeyD2g0W7IiVA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Text": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "lxs5aaAne1i3tQF21xuoIehW9wSXS74HlgEDxQpd7+Szj68umBSQOPcQWwkG9HOmwYgL4s/Du+X0XYRu3xG4ng==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "ZvD5nIWnfjCrZH01HQZssdWZEOrK30QHB4/dwhQC5YEulFdQ1QGywR5ENi0Plfvp3bvNrzh/XCe421n2Qeg0yw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.Trino": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "moVfitWbIRSrNXi9DDRRwgASJPZ1FNEudSFRzRr5YdKc+eZVJlmW1lrky2HHQkXKi/1HxsMmgjWypwRybrCN7Q==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "alPmu3nChpI7SqcEXVMSfZ+9vEgECo0f9jsypTKL/oyLi4THSqlgvKBmUHZ/Xc6ISMUSx3cdkGOh0yELK8Wgiw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "MessagePack": {
@@ -324,21 +337,39 @@
           "SqlParserCS": "0.6.5"
         }
       },
+      "DubUrl.Provider.Hive": {
+        "type": "Transitive",
+        "resolved": "0.73.1",
+        "contentHash": "BSVzBRlh2wyTWrt8D73pLjxL5xv7TaqTVeDEPERIpyL2Rcl2ejnD/SI67TAvQHnMopA4ENqeAwF67oiasAYAYg==",
+        "dependencies": {
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
+        }
+      },
+      "DubUrl.Provider.Spark": {
+        "type": "Transitive",
+        "resolved": "0.73.1",
+        "contentHash": "+13UzjpakE1BvBGuxX9OuFYWMQsejjLa7fn0sOnhfIN7n1e/niDiuarabxuMyw9OHhgTKV8BNYr3p/6snH/w6w==",
+        "dependencies": {
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
+        }
+      },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "5t1lgWne2SGhv0EKaLmXu8g9qnv4RfI2VDklYrOXhrhj7+RYr3AhWsz1PZHd+XKD/lRUvIVnvb8Y5QEP6fAP7Q==",
+        "resolved": "0.111.0",
+        "contentHash": "22qr7/pgEKcFDcT48Hpm1oL1GBvsi0OHk0UfTz26AyGPvDLuOQ5Cy81zjX9Seeh7vquZo2dbh5Y5kOLbQHv6lw==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.67.0"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "Er/ojW5j+fsZZ++H5BCXeBt8G7c+hJvcBkGSXPt195LQd3t32y/DCZbgMYn+qDfWkJVawTpCZw6wHmMZ9HMBTw==",
+        "resolved": "0.111.0",
+        "contentHash": "iJn06tm9+v2jdtkxasuFcfhmvrSjxwfDwrYHNx1ib9qnMonPZTz+mLujBpdnv32LqEFpbZnVJ9yS7an8vBW56A==",
         "dependencies": {
-          "DubUrl.Schema": "0.109.0",
+          "DubUrl.Schema": "0.111.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -778,8 +809,8 @@
         "type": "Project",
         "dependencies": {
           "DubUrl": "[0.70.2, 0.70.2]",
-          "DubUrl.Schema": "[0.109.0, 0.109.0]",
-          "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
+          "DubUrl.Schema": "[0.111.0, 0.111.0]",
+          "DubUrl.Schema.Documents": "[0.111.0, 0.111.0]"
         }
       }
     },
@@ -1060,155 +1091,168 @@
       },
       "DubUrl.Provider.Access": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "CSapVvIowe90JDFRLGmjaqYUFLUdOGBlnUiw6d8qJ6vqWQxAogmLUm72GcaVwCj2y5qvk4Luln5oouiPRpCG6w==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "aTya398+pVlHlfmzmdXnPvD44L36hH46vQOsJA2bTZ7sad9/ow55nL9vB+t4oVbkRE3zbodroW+eRW2QRveQDw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Db2": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "Gcjeb42ZUWPQnB4X/H8N/rp5Ls8aflNtu4eys91Anah6wmZagusBQCJ/ZA2dYOwVeGnOLOHR7mWAHm7aTZHvUw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "z+k31tXaV31va+NDubh60QIBE5VLeRIALco/lFbXBKdIw/a/dCjQqlZTzbXRvZvvCB93dtu7GBhgYstYlFdVLA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Drill": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "lmxTwZZfttDzOJ5MV12pZ3BYRqMo5PlPnGCRiv9n2WsqYmLKfoGxn+viYGiXqorvd/WGfUXIENSH0uaJq2+xfw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "tZc1K4w2Iog64b1bEioepqrqhgi9+OxzbbxLB2a+qgGP32zfOJEAUY1TdZe8ZKbMvzTBItx/Zzo4BPLFmVqFcw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.DuckDb": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "DtNuR2WGH+u9tt3PviHS1rhFaZ7e53LRA9RlSOZ6sOT4cjOV64RLTAO2/iY+lWXh0CI47NpVjH7xJZrxE/3asQ==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "V35dYgqUEqOPNF3zCcoXOZbxRPn1czzdBJbkicwHw1zVHzaeeMQ7hU7O9NWfBWYZxGk06WjekvpzbrMENKouVw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Excel": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "I8zp3gT74miSKuCY3kqHX/CfNzYML2XGm1GN6rcoaE3Sjv64a3fLxhSeTslqmCHinQGgp5I/0gPsj4Gq+vHYVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "8EbKd4Tfc/Vaw8gJh3dBHHHwmqJvPhhmveYTCEaz3bEct0Lm3UJxIbTQ6El5eqVolNPp0dSMofEcmqT6r6jXhw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.FirebirdSql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "4FoR6lUoVeX+DJHo2Wn4EQoBmUkJSDVOBwB4LB2Ec0hDxCBtP0rSizR5W5dcg63h4Huihby85ji6se8oPtr1oQ==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "BndvpDWb3Tr3oTUESozL+3go5kOHnGxxpHwFefahwlIEU0zZbuOPIlAI9d7JDbyjJdpVGRbjudGPhX910E3Hxw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.MySql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "XoIJOnUPcE5kl4zfwYsbVFIqVm/fIwPvlllC0TtSwwX5J2em0sEMoe2u4CwJkuKXaYOQ4SROoCnraiWDn2LF2g==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "6aAi4/J2tcYmV86rZfBfuuKflqe5Y+ctBk/FcFUp65xWg9WJ9fkzRqArYcGtvA8c0+RMEjyv8ktdT+bNxDP5dQ==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Odbc": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oDUxGENdP5l9Ae/K5Fnd20gnNhI7fWHPRMhVd0EFNIGA4WuyptPhiBMUx9G0v7XLzc6xfaCuZ4/D87rCUpYqLA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "PsJ9YsW15FBfMQyh8X4Jv/ZWf6UgvoJZ2D8Iq0gJj1LpWyajQgZFV8ZKO3ZDLLOyI8NswoXg0ItqGBiaEcfJJw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Access": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Drill": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.DuckDb": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Excel": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.MySql": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.PostgreSql": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.SqlServer": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Text": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Trino": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Provider.Access": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Drill": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.DuckDb": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Excel": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Hive": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.MySql": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.PostgreSql": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Spark": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.SqlServer": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Text": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Trino": "[0.73.1, 1.0.0)"
         }
       },
       "DubUrl.Provider.Oracle": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "tUV5KP4XsUDT7Nugn8jjLxg3cIzyDhbjkV9TXQgf3Ie5paGHaP8mpGBFBkql1RKHgvFYjk5j/lnMfwEDywvVVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "vvVSalnCdQJY4Z7FPJH6ceNOuaJps5DlLi07f1htxxblRZzGoLdrCyhDh542JMcLyHJgUCGz3Rj+1QB9UHe7AA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.PostgreSql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oZo3tfgXAHgKJ737BmBoKlhRVRrgbueDYdLmcjKlfFFAISzNoD921uSc0sb5UySd5CMSxr6zZAEs2L0xwY9jjA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "m+v9xj3UCU734afeSqcP0IK9pMgqhpti16kF/DiXQLd8X5tNWpPNSMwfRzFpiWqaUS9HVo8VUc0PMcZ/0b4z7w==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "KHCRQrvoNlGsrYxYOm8CefWj+duguq7BKlFLuTkFoYDL1mCh9obZuP5y+Cvy+sBdz+gFY/k87D8rMl4cjTxfmw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "jijMRz1ltIt1/eh3EzGpjgBFbdyH23CXygteOofwdzSxw5bwVz/XGsHmU+tBrmDDTtc6uII6rgdWaqYhoKNOkg==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Sqlite": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "zOWvXr46zghllW+fuOCbdixjoWNAivECf7cs+XdSlA9XkpGLZ0F1TXQIWZC/nD3ICZ1a+/HfaOe6sliowJRyVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "m7/zfF29s0HvWjORuU8/q+ozZOzDbs8mlMgn+lWZYVCX7iIQJsPFJ0GgzMhhVLe7tdREANYygykfRpyoh/ISnA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "TS1jfj4sHCzTXh2Ov/rfW2BsBFfx6fKuKjeq3o/kmc+qp9p0SA5EV2HmuYfcOU5jl2zOihZu+q3cmWHr1M463A==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "LfncKo8pTWV7MN/z7M844xu/w69Bpxsw/H072QeAqjg0H1KlswbOEpuEZsOdIGKZ1ZqsfDDfZPgeh5MXp1fX7A==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Teradata": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "6yya2J0ajphigBXMD6A56ouG6j6/XkH8ZBwxnF8KOJG6hS5JLVyzGhLeAxuS51VkjcYDrszvkU3DlsXdRcor4g==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "+0OM6ItKOz5/M5mVu5c/jNTf4R1rptROSbDLbygOKw4+cr4fMEaHyXJL3lRNl/nPef9prTunhZeyD2g0W7IiVA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Text": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "lxs5aaAne1i3tQF21xuoIehW9wSXS74HlgEDxQpd7+Szj68umBSQOPcQWwkG9HOmwYgL4s/Du+X0XYRu3xG4ng==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "ZvD5nIWnfjCrZH01HQZssdWZEOrK30QHB4/dwhQC5YEulFdQ1QGywR5ENi0Plfvp3bvNrzh/XCe421n2Qeg0yw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.Trino": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "moVfitWbIRSrNXi9DDRRwgASJPZ1FNEudSFRzRr5YdKc+eZVJlmW1lrky2HHQkXKi/1HxsMmgjWypwRybrCN7Q==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "alPmu3nChpI7SqcEXVMSfZ+9vEgECo0f9jsypTKL/oyLi4THSqlgvKBmUHZ/Xc6ISMUSx3cdkGOh0yELK8Wgiw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "MessagePack": {
@@ -1371,21 +1415,39 @@
           "SqlParserCS": "0.6.5"
         }
       },
+      "DubUrl.Provider.Hive": {
+        "type": "Transitive",
+        "resolved": "0.73.1",
+        "contentHash": "BSVzBRlh2wyTWrt8D73pLjxL5xv7TaqTVeDEPERIpyL2Rcl2ejnD/SI67TAvQHnMopA4ENqeAwF67oiasAYAYg==",
+        "dependencies": {
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
+        }
+      },
+      "DubUrl.Provider.Spark": {
+        "type": "Transitive",
+        "resolved": "0.73.1",
+        "contentHash": "+13UzjpakE1BvBGuxX9OuFYWMQsejjLa7fn0sOnhfIN7n1e/niDiuarabxuMyw9OHhgTKV8BNYr3p/6snH/w6w==",
+        "dependencies": {
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
+        }
+      },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "5t1lgWne2SGhv0EKaLmXu8g9qnv4RfI2VDklYrOXhrhj7+RYr3AhWsz1PZHd+XKD/lRUvIVnvb8Y5QEP6fAP7Q==",
+        "resolved": "0.111.0",
+        "contentHash": "22qr7/pgEKcFDcT48Hpm1oL1GBvsi0OHk0UfTz26AyGPvDLuOQ5Cy81zjX9Seeh7vquZo2dbh5Y5kOLbQHv6lw==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.67.0"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "Er/ojW5j+fsZZ++H5BCXeBt8G7c+hJvcBkGSXPt195LQd3t32y/DCZbgMYn+qDfWkJVawTpCZw6wHmMZ9HMBTw==",
+        "resolved": "0.111.0",
+        "contentHash": "iJn06tm9+v2jdtkxasuFcfhmvrSjxwfDwrYHNx1ib9qnMonPZTz+mLujBpdnv32LqEFpbZnVJ9yS7an8vBW56A==",
         "dependencies": {
-          "DubUrl.Schema": "0.109.0",
+          "DubUrl.Schema": "0.111.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -1859,8 +1921,8 @@
         "type": "Project",
         "dependencies": {
           "DubUrl": "[0.70.2, 0.70.2]",
-          "DubUrl.Schema": "[0.109.0, 0.109.0]",
-          "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
+          "DubUrl.Schema": "[0.111.0, 0.111.0]",
+          "DubUrl.Schema.Documents": "[0.111.0, 0.111.0]"
         }
       }
     },
@@ -2195,155 +2257,168 @@
       },
       "DubUrl.Provider.Access": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "CSapVvIowe90JDFRLGmjaqYUFLUdOGBlnUiw6d8qJ6vqWQxAogmLUm72GcaVwCj2y5qvk4Luln5oouiPRpCG6w==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "aTya398+pVlHlfmzmdXnPvD44L36hH46vQOsJA2bTZ7sad9/ow55nL9vB+t4oVbkRE3zbodroW+eRW2QRveQDw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Db2": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "Gcjeb42ZUWPQnB4X/H8N/rp5Ls8aflNtu4eys91Anah6wmZagusBQCJ/ZA2dYOwVeGnOLOHR7mWAHm7aTZHvUw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "z+k31tXaV31va+NDubh60QIBE5VLeRIALco/lFbXBKdIw/a/dCjQqlZTzbXRvZvvCB93dtu7GBhgYstYlFdVLA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Drill": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "lmxTwZZfttDzOJ5MV12pZ3BYRqMo5PlPnGCRiv9n2WsqYmLKfoGxn+viYGiXqorvd/WGfUXIENSH0uaJq2+xfw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "tZc1K4w2Iog64b1bEioepqrqhgi9+OxzbbxLB2a+qgGP32zfOJEAUY1TdZe8ZKbMvzTBItx/Zzo4BPLFmVqFcw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.DuckDb": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "DtNuR2WGH+u9tt3PviHS1rhFaZ7e53LRA9RlSOZ6sOT4cjOV64RLTAO2/iY+lWXh0CI47NpVjH7xJZrxE/3asQ==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "V35dYgqUEqOPNF3zCcoXOZbxRPn1czzdBJbkicwHw1zVHzaeeMQ7hU7O9NWfBWYZxGk06WjekvpzbrMENKouVw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Excel": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "I8zp3gT74miSKuCY3kqHX/CfNzYML2XGm1GN6rcoaE3Sjv64a3fLxhSeTslqmCHinQGgp5I/0gPsj4Gq+vHYVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "8EbKd4Tfc/Vaw8gJh3dBHHHwmqJvPhhmveYTCEaz3bEct0Lm3UJxIbTQ6El5eqVolNPp0dSMofEcmqT6r6jXhw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.FirebirdSql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "4FoR6lUoVeX+DJHo2Wn4EQoBmUkJSDVOBwB4LB2Ec0hDxCBtP0rSizR5W5dcg63h4Huihby85ji6se8oPtr1oQ==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "BndvpDWb3Tr3oTUESozL+3go5kOHnGxxpHwFefahwlIEU0zZbuOPIlAI9d7JDbyjJdpVGRbjudGPhX910E3Hxw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.MySql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "XoIJOnUPcE5kl4zfwYsbVFIqVm/fIwPvlllC0TtSwwX5J2em0sEMoe2u4CwJkuKXaYOQ4SROoCnraiWDn2LF2g==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "6aAi4/J2tcYmV86rZfBfuuKflqe5Y+ctBk/FcFUp65xWg9WJ9fkzRqArYcGtvA8c0+RMEjyv8ktdT+bNxDP5dQ==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Odbc": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oDUxGENdP5l9Ae/K5Fnd20gnNhI7fWHPRMhVd0EFNIGA4WuyptPhiBMUx9G0v7XLzc6xfaCuZ4/D87rCUpYqLA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "PsJ9YsW15FBfMQyh8X4Jv/ZWf6UgvoJZ2D8Iq0gJj1LpWyajQgZFV8ZKO3ZDLLOyI8NswoXg0ItqGBiaEcfJJw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Access": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Drill": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.DuckDb": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Excel": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.MySql": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.PostgreSql": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.SqlServer": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Text": "[0.56.0, 1.0.0)",
-          "DubUrl.Provider.Trino": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Provider.Access": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Drill": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.DuckDb": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Excel": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Hive": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.MySql": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.PostgreSql": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Spark": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.SqlServer": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Text": "[0.73.1, 1.0.0)",
+          "DubUrl.Provider.Trino": "[0.73.1, 1.0.0)"
         }
       },
       "DubUrl.Provider.Oracle": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "tUV5KP4XsUDT7Nugn8jjLxg3cIzyDhbjkV9TXQgf3Ie5paGHaP8mpGBFBkql1RKHgvFYjk5j/lnMfwEDywvVVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "vvVSalnCdQJY4Z7FPJH6ceNOuaJps5DlLi07f1htxxblRZzGoLdrCyhDh542JMcLyHJgUCGz3Rj+1QB9UHe7AA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.PostgreSql": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "oZo3tfgXAHgKJ737BmBoKlhRVRrgbueDYdLmcjKlfFFAISzNoD921uSc0sb5UySd5CMSxr6zZAEs2L0xwY9jjA==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "m+v9xj3UCU734afeSqcP0IK9pMgqhpti16kF/DiXQLd8X5tNWpPNSMwfRzFpiWqaUS9HVo8VUc0PMcZ/0b4z7w==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Snowflake": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "KHCRQrvoNlGsrYxYOm8CefWj+duguq7BKlFLuTkFoYDL1mCh9obZuP5y+Cvy+sBdz+gFY/k87D8rMl4cjTxfmw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "jijMRz1ltIt1/eh3EzGpjgBFbdyH23CXygteOofwdzSxw5bwVz/XGsHmU+tBrmDDTtc6uII6rgdWaqYhoKNOkg==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Sqlite": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "zOWvXr46zghllW+fuOCbdixjoWNAivECf7cs+XdSlA9XkpGLZ0F1TXQIWZC/nD3ICZ1a+/HfaOe6sliowJRyVw==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "m7/zfF29s0HvWjORuU8/q+ozZOzDbs8mlMgn+lWZYVCX7iIQJsPFJ0GgzMhhVLe7tdREANYygykfRpyoh/ISnA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.SqlServer": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "TS1jfj4sHCzTXh2Ov/rfW2BsBFfx6fKuKjeq3o/kmc+qp9p0SA5EV2HmuYfcOU5jl2zOihZu+q3cmWHr1M463A==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "LfncKo8pTWV7MN/z7M844xu/w69Bpxsw/H072QeAqjg0H1KlswbOEpuEZsOdIGKZ1ZqsfDDfZPgeh5MXp1fX7A==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Teradata": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "6yya2J0ajphigBXMD6A56ouG6j6/XkH8ZBwxnF8KOJG6hS5JLVyzGhLeAxuS51VkjcYDrszvkU3DlsXdRcor4g==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "+0OM6ItKOz5/M5mVu5c/jNTf4R1rptROSbDLbygOKw4+cr4fMEaHyXJL3lRNl/nPef9prTunhZeyD2g0W7IiVA==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
         }
       },
       "DubUrl.Provider.Text": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "lxs5aaAne1i3tQF21xuoIehW9wSXS74HlgEDxQpd7+Szj68umBSQOPcQWwkG9HOmwYgL4s/Du+X0XYRu3xG4ng==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "ZvD5nIWnfjCrZH01HQZssdWZEOrK30QHB4/dwhQC5YEulFdQ1QGywR5ENi0Plfvp3bvNrzh/XCe421n2Qeg0yw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Provider.Trino": {
         "type": "Direct",
-        "requested": "[0.56.0, 0.56.0]",
-        "resolved": "0.56.0",
-        "contentHash": "moVfitWbIRSrNXi9DDRRwgASJPZ1FNEudSFRzRr5YdKc+eZVJlmW1lrky2HHQkXKi/1HxsMmgjWypwRybrCN7Q==",
+        "requested": "[0.73.1, 0.73.1]",
+        "resolved": "0.73.1",
+        "contentHash": "alPmu3nChpI7SqcEXVMSfZ+9vEgECo0f9jsypTKL/oyLi4THSqlgvKBmUHZ/Xc6ISMUSx3cdkGOh0yELK8Wgiw==",
         "dependencies": {
-          "DubUrl": "[0.56.0, 1.0.0)"
+          "DubUrl": "0.70.2"
         }
       },
       "MessagePack": {
@@ -2500,21 +2575,39 @@
           "SqlParserCS": "0.6.5"
         }
       },
+      "DubUrl.Provider.Hive": {
+        "type": "Transitive",
+        "resolved": "0.73.1",
+        "contentHash": "BSVzBRlh2wyTWrt8D73pLjxL5xv7TaqTVeDEPERIpyL2Rcl2ejnD/SI67TAvQHnMopA4ENqeAwF67oiasAYAYg==",
+        "dependencies": {
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
+        }
+      },
+      "DubUrl.Provider.Spark": {
+        "type": "Transitive",
+        "resolved": "0.73.1",
+        "contentHash": "+13UzjpakE1BvBGuxX9OuFYWMQsejjLa7fn0sOnhfIN7n1e/niDiuarabxuMyw9OHhgTKV8BNYr3p/6snH/w6w==",
+        "dependencies": {
+          "DubUrl": "0.70.2",
+          "DubUrl.Schema": "0.111.0"
+        }
+      },
       "DubUrl.Schema": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "5t1lgWne2SGhv0EKaLmXu8g9qnv4RfI2VDklYrOXhrhj7+RYr3AhWsz1PZHd+XKD/lRUvIVnvb8Y5QEP6fAP7Q==",
+        "resolved": "0.111.0",
+        "contentHash": "22qr7/pgEKcFDcT48Hpm1oL1GBvsi0OHk0UfTz26AyGPvDLuOQ5Cy81zjX9Seeh7vquZo2dbh5Y5kOLbQHv6lw==",
         "dependencies": {
           "Didot.Core": "0.34.0",
-          "DubUrl": "0.67.0"
+          "DubUrl": "0.70.2"
         }
       },
       "DubUrl.Schema.Documents": {
         "type": "Transitive",
-        "resolved": "0.109.0",
-        "contentHash": "Er/ojW5j+fsZZ++H5BCXeBt8G7c+hJvcBkGSXPt195LQd3t32y/DCZbgMYn+qDfWkJVawTpCZw6wHmMZ9HMBTw==",
+        "resolved": "0.111.0",
+        "contentHash": "iJn06tm9+v2jdtkxasuFcfhmvrSjxwfDwrYHNx1ib9qnMonPZTz+mLujBpdnv32LqEFpbZnVJ9yS7an8vBW56A==",
         "dependencies": {
-          "DubUrl.Schema": "0.109.0",
+          "DubUrl.Schema": "0.111.0",
           "YamlDotNet": "18.1.0"
         }
       },
@@ -2973,8 +3066,8 @@
         "type": "Project",
         "dependencies": {
           "DubUrl": "[0.70.2, 0.70.2]",
-          "DubUrl.Schema": "[0.109.0, 0.109.0]",
-          "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
+          "DubUrl.Schema": "[0.111.0, 0.111.0]",
+          "DubUrl.Schema.Documents": "[0.111.0, 0.111.0]"
         }
       }
     },

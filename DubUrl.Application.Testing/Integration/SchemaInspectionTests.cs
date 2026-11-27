@@ -136,13 +136,13 @@ public class SchemaInspectionTests
     }
 
     [Test]
-    public void ProviderRegistration_DiscoversOnlyExplicitlySupportedDatabase()
+    public void ProviderRegistration_ExposesDiscoveryForPostgreSqlAndCockroachDb()
     {
         var registry = new ProviderCatalogBuilder().AddApplicationProviders().Build();
         Assert.Multiple(() =>
         {
             Assert.That(new ConnectionUrl("pg://localhost/sample", registry).TryGetCapability<SchemaDiscoveryCapability>(out _), Is.True);
-            Assert.That(new ConnectionUrl("cockroach://localhost/sample", registry).TryGetCapability<SchemaDiscoveryCapability>(out _), Is.False);
+            Assert.That(new ConnectionUrl("cockroach://localhost/sample", registry).TryGetCapability<SchemaDiscoveryCapability>(out _), Is.True);
         });
     }
 

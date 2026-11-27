@@ -25,9 +25,10 @@
 		<!-- Local project versions must satisfy the extracted Schema dependency baseline. -->
         <Version>1.2.0</Version>
         <DubUrlVersion Condition="'$(DubUrlVersion)' == ''">0.70.2</DubUrlVersion>
-        <DubUrlLibraryVersion Condition="'$(DubUrlLibraryVersion)' == ''">0.56.0</DubUrlLibraryVersion>
-        <SchemaPackageVersion Condition="'$(SchemaPackageVersion)' == ''">0.109.0</SchemaPackageVersion>
-		<ConnectorCatalogTag Condition="'$(ConnectorCatalogTag)' == ''">connectors-v0.73.0</ConnectorCatalogTag>
+        <DubUrlLibraryVersion Condition="'$(DubUrlLibraryVersion)' == ''">0.73.1</DubUrlLibraryVersion>
+        <DubUrlProviderTestingVersion Condition="'$(DubUrlProviderTestingVersion)' == ''">0.56.0</DubUrlProviderTestingVersion>
+        <SchemaPackageVersion Condition="'$(SchemaPackageVersion)' == ''">0.111.0</SchemaPackageVersion>
+		<ConnectorCatalogTag Condition="'$(ConnectorCatalogTag)' == ''">connectors-v0.73.1</ConnectorCatalogTag>
         <Authors>Cédric L. Charlier</Authors>
 		<Owners>Seddryck</Owners>
 		<Company>nbiguity</Company>

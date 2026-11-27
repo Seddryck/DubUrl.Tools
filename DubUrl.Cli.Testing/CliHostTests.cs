@@ -68,8 +68,8 @@ public class CliHostTests
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(CliExitCodes.Success));
-            Assert.That(console.StandardOutput, Does.Contain("CREATE TABLE customer"));
-            Assert.That(console.StandardOutput, Does.Contain("is_active INTEGER NOT NULL DEFAULT true"));
+            Assert.That(console.StandardOutput, Does.Contain("CREATE TABLE \"customer\""));
+            Assert.That(console.StandardOutput, Does.Contain("\"is_active\" INTEGER NOT NULL DEFAULT true"));
             Assert.That(console.StandardError, Is.Empty);
         });
     }
@@ -113,7 +113,7 @@ public class CliHostTests
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(CliExitCodes.Success));
-            Assert.That(console.StandardOutput, Does.Contain("CREATE TABLE customer"));
+            Assert.That(console.StandardOutput, Does.Contain("CREATE TABLE \"customer\""));
             Assert.That(File.Exists(databasePath), Is.False);
         });
     }
@@ -205,7 +205,7 @@ public class CliHostTests
             {
                 Assert.That(exitCode, Is.Zero);
                 Assert.That(console.StandardOutput, Is.Empty);
-                Assert.That(File.ReadAllText(output), Does.Contain("CREATE TABLE customer"));
+                Assert.That(File.ReadAllText(output), Does.Contain("CREATE TABLE \"customer\""));
             });
         }
         finally

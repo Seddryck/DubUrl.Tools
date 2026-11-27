@@ -69,7 +69,7 @@ public partial class SchemaWorkerMethodsTests
         {
             Assert.That(first.RootElement.GetProperty("result").GetProperty("success").GetBoolean(), Is.True);
             Assert.That(first.RootElement.GetProperty("result").GetProperty("sql").GetString(),
-                Does.Contain("CREATE TABLE customer"));
+                Does.Contain("CREATE TABLE \"customer\""));
             Assert.That(second.RootElement.GetProperty("result").GetProperty("sql").GetString(),
                 Is.EqualTo(first.RootElement.GetProperty("result").GetProperty("sql").GetString()));
         });

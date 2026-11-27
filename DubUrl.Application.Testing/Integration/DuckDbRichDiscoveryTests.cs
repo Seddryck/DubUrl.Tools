@@ -13,7 +13,7 @@ namespace DubUrl.Provider.DuckDb.Tests.Discovery;
 public partial class DuckDbDiscoveryTests
 {
     [Test]
-    public async Task LiveCatalog_SequenceGenerationAndOrderedIndexes_RoundTripWithoutAdvancingSequence()
+    public async Task LiveCatalog_SequenceDefaultAndOrderedIndexes_RoundTripWithoutAdvancingSequence()
     {
         await using var source = new DuckDBConnection("DataSource=:memory:");
         await source.OpenAsync();
@@ -35,8 +35,9 @@ public partial class DuckDbDiscoveryTests
         var index = result.Inspection.Schema.Indexes.Values.Single();
         Assert.Multiple(() =>
         {
-            Assert.That(((IdentityColumnGeneration)table.Columns["id"].Generation!).Seed, Is.EqualTo(10));
-            Assert.That(((IdentityColumnGeneration)table.Columns["id"].Generation!).Increment, Is.EqualTo(2));
+            Assert.That(table.Columns["id"].Generation, Is.Null);
+            Assert.That(table.Columns["id"].DefaultExpression,
+                Is.EqualTo(ColumnDefaultExpression.NextSequenceValue(new("id'seq", "sales.schema"))));
             Assert.That(table.Columns["id"].DefaultValue, Is.Null);
             Assert.That(table.Columns["a,b"].Generation, Is.Null);
             Assert.That(table.Columns["a,b"].DefaultValue, Is.EqualTo("GENERATED ALWAYS AS(x)"));
@@ -53,7 +54,10 @@ public partial class DuckDbDiscoveryTests
         Assert.That(renderer.Render(mapped), Is.EqualTo(sql));
         await using var target = new DuckDBConnection("DataSource=:memory:");
         await target.OpenAsync();
-        await Execute(target, """CREATE SCHEMA "sales.schema" """);
+        await Execute(target, """
+            CREATE SCHEMA "sales.schema";
+            CREATE SEQUENCE "sales.schema"."id'seq" START 10 INCREMENT 2;
+            """);
         await Execute(target, sql);
         var reinspected = await service.InspectAsync(target, new DuckDbMetadataReader(), options);
         Assert.That(reinspected.IsSuccess, Is.True, string.Join(";", reinspected.Diagnostics.Select(item => item.Message)));
@@ -95,6 +99,26 @@ public partial class DuckDbDiscoveryTests
     [TestCase("CREATE SEQUENCE s MAXVALUE 100; CREATE TABLE t(id BIGINT DEFAULT nextval('s'))")]
     [TestCase("CREATE SEQUENCE s; CREATE TABLE t(a BIGINT DEFAULT nextval('s'),b BIGINT DEFAULT nextval('s'))")]
     [TestCase("CREATE SEQUENCE s; CREATE TABLE t(id BIGINT DEFAULT nextval('s')); CREATE TABLE other(id BIGINT DEFAULT nextval('s'))")]
+    public async Task LiveCatalog_SequenceDefaults_ArePreservedAsNamedReferences(string ddl)
+    {
+        await using var connection = new DuckDBConnection("DataSource=:memory:");
+        await connection.OpenAsync();
+        await Execute(connection, ddl);
+
+        var result = await new SchemaInspectionService().InspectAsync(connection, new DuckDbMetadataReader());
+        Assert.That(result.IsSuccess, Is.True, string.Join("; ", result.Diagnostics.Select(item => item.Message)));
+        var columns = result.Inspection.Schema!.Tables.Values.SelectMany(table => table.Columns.Values).ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(columns, Is.Not.Empty);
+            Assert.That(columns.Select(column => column.Generation), Is.All.Null);
+            Assert.That(columns.Select(column => column.DefaultExpression),
+                Is.All.EqualTo(ColumnDefaultExpression.NextSequenceValue(new("s", "main"))));
+        });
+        Assert.That(await Scalar(connection, "SELECT last_value FROM duckdb_sequences()"), Is.EqualTo(DBNull.Value));
+    }
+
     [TestCase("CREATE SEQUENCE s; CREATE TABLE t(id BIGINT DEFAULT (nextval('s')+1))")]
     [TestCase("CREATE SEQUENCE s; CREATE TABLE t(a BIGINT DEFAULT (nextval('s')+1),b BIGINT DEFAULT nextval('s'))")]
     public async Task LiveCatalog_UnrepresentableSequenceSemantics_AreNotFlattenedIntoIdentity(string ddl)

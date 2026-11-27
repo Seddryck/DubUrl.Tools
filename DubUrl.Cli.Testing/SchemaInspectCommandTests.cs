@@ -80,7 +80,7 @@ public class SchemaInspectCommandTests
         {
             var console = new TestConsole();
             await using var services = CliComposition.CreateDefault(console, Configuration());
-            var code = await CliHost.InvokeAsync(["schema","inspect","--connection-env",variable,"--basic",
+            var code = await CliHost.InvokeAsync(["schema","inspect","--connection-env",variable,"--basic","--schema","main",
                 "--table","main.\"parent.table\"","--table","main.child","--output-format","json"], services);
             Assert.That(code, Is.EqualTo(0), console.StandardError);
             using var json = System.Text.Json.JsonDocument.Parse(console.StandardOutput);

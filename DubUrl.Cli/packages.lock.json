@@ -189,10 +189,19 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.68.0",
-        "contentHash": "gDqX61QetDkMrb3xz7S6T2tM2EOz8n7HcLEKTraZ0byoTdxwg4g+TzWdZi/pZu3WUxkoH1AArGg0AVjH63GqrA==",
+        "resolved": "0.70.2",
+        "contentHash": "1aDS2pIqWi4VJZO0dD+YYZuDrAZ/qoH1M5YLIq21sw5PZ+RyXe2zdrFKIbmZny6DUCvHYb0La+GyTTenGHN/0w==",
         "dependencies": {
-          "Didot.Core": "0.34.0"
+          "Didot.Core": "0.34.0",
+          "DubUrl.Parser": "0.70.2"
+        }
+      },
+      "DubUrl.Parser": {
+        "type": "Transitive",
+        "resolved": "0.70.2",
+        "contentHash": "Y5q9czd1bsKbfDxE2IROXRaVNl1JEn6K98RfbsNZCQR2wFC+HgFmgPeCYOD+q2ADgOXzX0Dh0kyHeCJ+eHFHuQ==",
+        "dependencies": {
+          "SqlParserCS": "0.6.5"
         }
       },
       "DubUrl.Schema": {
@@ -494,6 +503,11 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.3"
         }
       },
+      "Microsoft.Extensions.ObjectPool": {
+        "type": "Transitive",
+        "resolved": "8.0.1",
+        "contentHash": "X21b8D6z58EG34OMLH955750mFaEaGs5xLGe9Vyi3059Cgb3sk+p2k/JlQXaieEBRrk+SVlFzDei3Q6PdVzJOA=="
+      },
       "Microsoft.Extensions.Options": {
         "type": "Transitive",
         "resolved": "10.0.3",
@@ -696,6 +710,14 @@
         "resolved": "0.57.2",
         "contentHash": "Y1+u73shwP+JYHmrkdN6bSt2kaGBEAafhi2nrecczbXdFRey+k7J/WF9YPfcB0rqivv2S8fmif6FSBq9m/AFvw=="
       },
+      "SqlParserCS": {
+        "type": "Transitive",
+        "resolved": "0.6.5",
+        "contentHash": "IKLnqJCGYrZPVpSUIBS+63c19YzETWN+/qY+KSili715vEmiNcJsH7XOTwBurhWbFaiUwkJcS2eYvgN9BmZUeA==",
+        "dependencies": {
+          "Microsoft.Extensions.ObjectPool": "8.0.1"
+        }
+      },
       "Stef.Validation": {
         "type": "Transitive",
         "resolved": "0.1.1",
@@ -796,7 +818,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.68.0, 0.68.0]",
+          "DubUrl": "[0.70.2, 0.70.2]",
           "DubUrl.Schema": "[0.109.0, 0.109.0]",
           "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
         }
@@ -1391,10 +1413,19 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.68.0",
-        "contentHash": "gDqX61QetDkMrb3xz7S6T2tM2EOz8n7HcLEKTraZ0byoTdxwg4g+TzWdZi/pZu3WUxkoH1AArGg0AVjH63GqrA==",
+        "resolved": "0.70.2",
+        "contentHash": "1aDS2pIqWi4VJZO0dD+YYZuDrAZ/qoH1M5YLIq21sw5PZ+RyXe2zdrFKIbmZny6DUCvHYb0La+GyTTenGHN/0w==",
         "dependencies": {
-          "Didot.Core": "0.34.0"
+          "Didot.Core": "0.34.0",
+          "DubUrl.Parser": "0.70.2"
+        }
+      },
+      "DubUrl.Parser": {
+        "type": "Transitive",
+        "resolved": "0.70.2",
+        "contentHash": "Y5q9czd1bsKbfDxE2IROXRaVNl1JEn6K98RfbsNZCQR2wFC+HgFmgPeCYOD+q2ADgOXzX0Dh0kyHeCJ+eHFHuQ==",
+        "dependencies": {
+          "SqlParserCS": "0.6.5"
         }
       },
       "DubUrl.Schema": {
@@ -1701,6 +1732,11 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.3"
         }
       },
+      "Microsoft.Extensions.ObjectPool": {
+        "type": "Transitive",
+        "resolved": "8.0.1",
+        "contentHash": "X21b8D6z58EG34OMLH955750mFaEaGs5xLGe9Vyi3059Cgb3sk+p2k/JlQXaieEBRrk+SVlFzDei3Q6PdVzJOA=="
+      },
       "Microsoft.Extensions.Options": {
         "type": "Transitive",
         "resolved": "10.0.3",
@@ -1903,6 +1939,14 @@
         "resolved": "0.57.2",
         "contentHash": "Y1+u73shwP+JYHmrkdN6bSt2kaGBEAafhi2nrecczbXdFRey+k7J/WF9YPfcB0rqivv2S8fmif6FSBq9m/AFvw=="
       },
+      "SqlParserCS": {
+        "type": "Transitive",
+        "resolved": "0.6.5",
+        "contentHash": "IKLnqJCGYrZPVpSUIBS+63c19YzETWN+/qY+KSili715vEmiNcJsH7XOTwBurhWbFaiUwkJcS2eYvgN9BmZUeA==",
+        "dependencies": {
+          "Microsoft.Extensions.ObjectPool": "8.0.1"
+        }
+      },
       "Stef.Validation": {
         "type": "Transitive",
         "resolved": "0.1.1",
@@ -2041,7 +2085,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.68.0, 0.68.0]",
+          "DubUrl": "[0.70.2, 0.70.2]",
           "DubUrl.Schema": "[0.109.0, 0.109.0]",
           "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
         }
@@ -2690,10 +2734,19 @@
       },
       "DubUrl": {
         "type": "Transitive",
-        "resolved": "0.68.0",
-        "contentHash": "gDqX61QetDkMrb3xz7S6T2tM2EOz8n7HcLEKTraZ0byoTdxwg4g+TzWdZi/pZu3WUxkoH1AArGg0AVjH63GqrA==",
+        "resolved": "0.70.2",
+        "contentHash": "1aDS2pIqWi4VJZO0dD+YYZuDrAZ/qoH1M5YLIq21sw5PZ+RyXe2zdrFKIbmZny6DUCvHYb0La+GyTTenGHN/0w==",
         "dependencies": {
-          "Didot.Core": "0.34.0"
+          "Didot.Core": "0.34.0",
+          "DubUrl.Parser": "0.70.2"
+        }
+      },
+      "DubUrl.Parser": {
+        "type": "Transitive",
+        "resolved": "0.70.2",
+        "contentHash": "Y5q9czd1bsKbfDxE2IROXRaVNl1JEn6K98RfbsNZCQR2wFC+HgFmgPeCYOD+q2ADgOXzX0Dh0kyHeCJ+eHFHuQ==",
+        "dependencies": {
+          "SqlParserCS": "0.6.5"
         }
       },
       "DubUrl.Schema": {
@@ -2997,6 +3050,11 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.3"
         }
       },
+      "Microsoft.Extensions.ObjectPool": {
+        "type": "Transitive",
+        "resolved": "8.0.1",
+        "contentHash": "X21b8D6z58EG34OMLH955750mFaEaGs5xLGe9Vyi3059Cgb3sk+p2k/JlQXaieEBRrk+SVlFzDei3Q6PdVzJOA=="
+      },
       "Microsoft.Extensions.Options": {
         "type": "Transitive",
         "resolved": "10.0.3",
@@ -3199,6 +3257,14 @@
         "resolved": "0.57.2",
         "contentHash": "Y1+u73shwP+JYHmrkdN6bSt2kaGBEAafhi2nrecczbXdFRey+k7J/WF9YPfcB0rqivv2S8fmif6FSBq9m/AFvw=="
       },
+      "SqlParserCS": {
+        "type": "Transitive",
+        "resolved": "0.6.5",
+        "contentHash": "IKLnqJCGYrZPVpSUIBS+63c19YzETWN+/qY+KSili715vEmiNcJsH7XOTwBurhWbFaiUwkJcS2eYvgN9BmZUeA==",
+        "dependencies": {
+          "Microsoft.Extensions.ObjectPool": "8.0.1"
+        }
+      },
       "Stef.Validation": {
         "type": "Transitive",
         "resolved": "0.1.1",
@@ -3328,7 +3394,7 @@
       "duburl.application": {
         "type": "Project",
         "dependencies": {
-          "DubUrl": "[0.68.0, 0.68.0]",
+          "DubUrl": "[0.70.2, 0.70.2]",
           "DubUrl.Schema": "[0.109.0, 0.109.0]",
           "DubUrl.Schema.Documents": "[0.109.0, 0.109.0]"
         }
